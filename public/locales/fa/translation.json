@@ -1,0 +1,559 @@
+{
+  "navbar": {
+    "menu": "منو",
+    "open": "باز",
+    "close": "بستن",
+    "openSidebar": "باز کردن سایدبار",
+    "closeSidebar": "بستن سایدبار",
+    "mobileOpenTooltip": "باز کردن منو (موبایل)",
+    "mobileOpenAria": "باز کردن منو در موبایل",
+    "languageSelector": "انتخاب زبان",
+    "chooseLanguage": "انتخاب زبان"
+  },
+  "sidebar": {
+    "menuTitle": "منو",
+    "dashboard": "داشبورد",
+    "users": "کاربران",
+    "table": "جدول داده",
+    "reports": "گزارشات",
+    "billing": "پرداخت",
+    "settings": "تنظیمات",
+    "home": "خانه",
+    "versionFull": "نسخه ۱.۰.۰",
+    "versionShort": "v1.0",
+    "aria": {
+      "navigation": "ناوبری اصلی",
+      "openMenu": "باز کردن منو",
+      "closeMenu": "بستن منو"
+    },
+
+    "basic-data": "داده‌های پایه",
+
+    "manifesto": "مانیفست",
+    "register": "ثبت‌نام"
+  },
+  "navbarInfo": {
+    "title": "مدیریت داده‌های پایه",
+    "items": {
+      "types_of_cars": "انواع خودرو",
+      "colors": "رنگ‌ها",
+      "countries": "کشورها",
+      "destinations": "مقاصد",
+      "companies": "شرکت‌ها",
+      "accessories": "لوازم جانبی",
+      "shipping": "حمل و نقل",
+      "clearance_agents": "کارگزاران ترخیص"
+    }
+  },
+  "companiesTable": {
+    "toolbar": {
+      "searchPlaceholder": "جستجو در نام و ایمیل...",
+      "manageColumns": "مدیریت ستون‌ها ▾",
+      "addNew": "افزودن"
+    },
+    "columns": {
+      "id": "شناسه",
+      "name": "نام شرکت",
+      "email": "ایمیل",
+      "actions": "عملیات"
+    },
+    "filters": {
+      "placeholder": "فیلتر..."
+    },
+    "columnsDropdown": {
+      "title": "نمایش ستون‌ها",
+      "showAll": "نمایش همه"
+    },
+    "select": {
+      "allRows": "انتخاب همه ردیف‌ها",
+      "row": "انتخاب ردیف"
+    },
+    "mobile": {
+      "card": {
+        "select": "انتخاب"
+      }
+    },
+    "pagination": {
+      "first": "اولین صفحه",
+      "prev": "صفحه قبل",
+      "next": "صفحه بعد",
+      "last": "آخرین صفحه",
+      "page": "صفحه",
+      "of": "از",
+      "goto": "| برو به صفحه:",
+      "perPage": "نمایش: {{count}}",
+      "pageSize": "تعداد ردیف‌ها"
+    },
+    "rowsCount": "{{count}} ردیف",
+    "dialog": {
+      "add": {
+        "title": "افزودن شرکت جدید",
+        "description": "اطلاعات شرکت جدید را وارد کنید.",
+        "labels": {
+          "name": "نام شرکت",
+          "email": "ایمیل"
+        },
+        "cancel": "انصراف",
+        "submit": "افزودن"
+      }
+    },
+    "toast": {
+      "errors": {
+        "nameRequired": "نام شرکت الزامی است",
+        "emailInvalid": "ایمیل معتبر نیست"
+      },
+      "success": {
+        "added": "شرکت جدید با موفقیت اضافه شد"
+      },
+      "info": {
+        "edited": "شرکت «{{name}}» ویرایش شد"
+      },
+      "delete": "شرکت «{{name}}» حذف شد"
+    }
+  },
+  "dataTable": {
+    "actions": {
+      "menu": {
+        "title": "عملیات",
+        "aria": "منوی عملیات"
+      },
+      "view": "مشاهده",
+      "edit": "ویرایش",
+      "tooltip": {
+        "openMenu": "باز کردن منوی عملیات",
+        "view": "نمایش جزئیات سطر",
+        "edit": "ویرایش/چک‌لیست سطر"
+      }
+    },
+    "title": "جدول داده‌ها",
+    "searchPlaceholder": "جستجو در تمام ستون‌ها...",
+    "filters": {
+      "placeholder": "جستجو…"
+    },
+    "columns": {
+      "id": "شناسه",
+      "type": "تایپ",
+      "vehicle": "وسیله نقلیه",
+      "date": "تاریخ",
+      "status": "وضعیت",
+      "actions": "عملیات"
+    },
+    "dateRange": {
+      "short": "بازه",
+      "select": "انتخاب بازه تاریخ",
+      "clear": "لغو",
+      "from": "از تاریخ",
+      "to": "تا تاریخ",
+      "all": "همه‌ی تاریخ‌ها"
+    },
+    "columnsDropdown": {
+      "manage": "مدیریت ستون‌ها ▾",
+      "title": "نمایش ستون‌ها",
+      "showAll": "نمایش همه",
+      "selectSticky": "ستون «انتخاب» همواره نمایش داده می‌شود."
+    },
+    "export": {
+      "excel": "خروجی Excel",
+      "pdf": "خروجی PDF",
+      "noColumns": "ستونی برای خروجی فعال نیست.",
+      "pdfError": "خطا در ساخت PDF",
+      "xlsError": "خطا در ساخت Excel",
+      "pdfTitle": "گزارش جدول"
+    },
+    "select": {
+      "allRows": "انتخاب همه ردیف‌ها",
+      "row": "انتخاب ردیف"
+    },
+    "mobile": {
+      "select": "انتخاب"
+    },
+    "pagination": {
+      "first": "اولین صفحه",
+      "prev": "صفحه قبل",
+      "next": "صفحه بعد",
+      "last": "آخرین صفحه",
+      "page": "صفحه",
+      "of": "از",
+      "goto": "| برو به صفحه:",
+      "perPage": "نمایش: {{count}}",
+      "pageSize": "تعداد ردیف‌ها",
+      "rowsCount": "{{count}} ردیف"
+    }
+  },
+  "docDetails": {
+    "title": "جزئیات سند",
+    "fields": {
+      "status": "وضعیت",
+      "id": "شناسه سند",
+      "date": "تاریخ",
+      "type": "نوع سند",
+      "vehicle": "وسیله نقلیه"
+    },
+    "more": "جزئیات بیشتر",
+    "actions": {
+      "viewVehicleDetails": "نمایش جزئیات خودرو",
+      "downloadInvoiceChecklist": "دانلود فاکتور و چک‌لیست"
+    },
+    "statusValues": {
+      "approved": "تأیید شده",
+      "rejected": "رد شده",
+      "pending": "در انتظار"
+    },
+    "fallbacks": {
+      "vehicleAlt": "وسیله نقلیه"
+    }
+  },
+  "common": {
+    "yes": "بله",
+    "no": "خیر"
+  },
+  "checklist": {
+    "title": "چک‌لیست خودرو",
+    "registrationInfo": "اطلاعات ثبت",
+    "vehicleAndModel": "{{vehicle}} - مدل {{year}}",
+    "sections": {
+      "availableReservedTitle": "قطعات موجود/رزرو",
+      "unavailableTitle": "قطعات ناموجود"
+    },
+    "messages": {
+      "noAvailableFound": "مورد موجودی پیدا نشد",
+      "allAvailable": "همه موارد موجود هستند"
+    },
+    "buttons": {
+      "addNote": "افزودن یادداشت",
+      "cancel": "انصراف",
+      "save": "ذخیره"
+    },
+    "headings": {
+      "note": "یادداشت",
+      "borderRepresentative": "نماینده مرزی",
+      "visitChart": "نمودار بازدید"
+    },
+    "placeholders": {
+      "note": "یادداشت خود را وارد کنید…",
+      "agentName": "نام نماینده"
+    },
+    "alts": {
+      "visitChart": "نمودار بازدید"
+    },
+    "chart": {
+      "caption": "دیاگرام بازدید خودرو"
+    },
+    "parts": {
+      "engineOil": "روغن موتور",
+      "airFilter": "فیلتر هوا",
+      "brakePads": "لنت ترمز",
+      "sparkPlugs": "شمع‌ها",
+      "battery": "باتری",
+      "wiperBlades": "تیغه برف‌پاک‌کن",
+      "tire": "لاستیک",
+      "headlight": "چراغ جلو",
+      "radiator": "رادیاتور",
+      "alternator": "دینام",
+      "clutchKit": "کیت کلاچ",
+      "fuelPump": "پمپ بنزین",
+      "ignitionCoil": "کوئل",
+      "oxygenSensor": "سنسور اکسیژن",
+      "shockAbsorber": "کمک‌فنر",
+      "starter": "استارت",
+      "thermostat": "ترموستات",
+      "timingBelt": "تسمه تایم",
+      "waterPump": "واترپمپ",
+      "wheelBearing": "بلبرینگ چرخ",
+      "cabinFilter": "فیلتر کابین",
+      "cvAxle": "پلوس",
+      "exhaustManifold": "مانیفولد اگزوز",
+      "injector": "انژکتور",
+      "glowPlug": "شمع گرمکن",
+      "horn": "بوق",
+      "muffler": "منبع اگزوز",
+      "pcvValve": "سوپاپ PCV",
+      "serpentineBelt": "تسمه دینام",
+      "turbocharger": "توربوشارژر"
+    }
+  },
+  "partNote": {
+    "title": "افزودن یادداشت برای «{{part}}»",
+    "description": "توضیحات/یادداشت خود را برای این قطعه وارد کنید.",
+    "placeholder": "متن یادداشت…",
+    "buttons": {
+      "cancel": "انصراف",
+      "saveNote": "ذخیره یادداشت"
+    }
+  },
+  "rowActions": {
+    "aria": {
+      "actionsMenu": "منوی عملیات"
+    },
+    "menu": {
+      "title": "عملیات",
+      "edit": "ویرایش",
+      "delete": "حذف"
+    },
+    "editDialog": {
+      "title": "ویرایش شرکت",
+      "description": "اطلاعات ردیف انتخاب‌شده را ویرایش کنید.",
+      "fields": {
+        "id": "شناسه",
+        "name": "نام شرکت",
+        "email": "ایمیل"
+      },
+      "placeholders": {
+        "name": "نام شرکت...",
+        "email": "email@example.com"
+      }
+    },
+    "deleteDialog": {
+      "title": "حذف شرکت",
+      "description": "آیا از حذف «{{name}}» مطمئن هستید؟"
+    },
+    "common": {
+      "cancel": "انصراف",
+      "save": "ذخیره",
+      "delete": "حذف"
+    }
+  },
+  "chart": {
+    "vehicles": {
+      "title": "细 نمودار خطی بخش‌های خودرو با نقطه‌های رنگی",
+      "subtitle": "توزیع نمونه در بخش‌های مختلف",
+      "count": "تعداد",
+      "sedan": "سدان",
+      "suv": "شاسی‌بلند (SUV)",
+      "truck": "کامیون",
+      "motorcycle": "موتورسیکلت",
+      "van": "ون",
+      "bus": "اتوبوس",
+      "trend": "روند صعودی ۵.۲٪ در این ماه",
+      "caption": "نمایش مجموع تعداد در هر بخش"
+    }
+  },
+  "chartLineDefault": {
+    "title": "نمودار خطی تعداد خودرو",
+    "subtitleMonths": "ژانویه تا ژوئن ۲۰۲۴",
+    "oneSeriesLabel": "تعداد",
+    "trend": "روند صعودی ۵٫۲٪ در این ماه",
+    "captionMonths": "مجموع تعداد خودرو در ۶ ماه گذشته",
+    "months": {
+      "january": "ژانویه",
+      "february": "فوریه",
+      "march": "مارس",
+      "april": "آوریل",
+      "may": "مه",
+      "june": "ژوئن"
+    }
+  },
+  "ChartLineLabelCustom": {
+    "title": "نمودار خطی بخش‌های خودرو (برچسب سفارشی)",
+    "subtitle": "ژانویه تا ژوئن ۲۰۲۴",
+    "trend": "روند صعودی ۵٫۲٪ در این ماه",
+    "caption": "نمایش مجموع تعداد خودرو در بخش‌ها",
+    "labels": {
+      "units": "تعداد",
+      "sedan": "سدان",
+      "suv": "شاسی‌بلند (SUV)",
+      "truck": "کامیون",
+      "motorcycle": "موتورسیکلت",
+      "van": "ون",
+      "other": "سایر"
+    }
+  },
+  "ChartLineMultiple": {
+    "title": "خودروها — نمودار خطی چندسری",
+    "subtitleMonths": "ژانویه تا ژوئن ۲۰۲۴",
+    "trend": "روند صعودی ۵٫۲٪ در این ماه",
+    "captionMonths": "مقایسه سواری و تجاری در ۶ ماه اخیر",
+    "labels": {
+      "passenger": "سواری",
+      "commercial": "تجاری"
+    },
+    "months": {
+      "january": "ژانویه",
+      "february": "فوریه",
+      "march": "مارس",
+      "april": "آوریل",
+      "may": "مه",
+      "june": "ژوئن"
+    }
+  },
+  "ChartBarMultiple": {
+    "title": "خودروها — نمودار میله‌ای چندسری",
+    "subtitleMonths": "ژانویه تا ژوئن ۲۰۲۴",
+    "trend": "روند صعودی ۵٫۲٪ در این ماه",
+    "captionMonths": "مقایسه خودروهای سواری و تجاری در ۶ ماه اخیر",
+    "labels": {
+      "passenger": "سواری",
+      "commercial": "تجاری"
+    },
+    "months": {
+      "january": "ژانویه",
+      "february": "فوریه",
+      "march": "مارس",
+      "april": "آوریل",
+      "may": "مه",
+      "june": "ژوئن"
+    }
+  },
+  "ChartPieInteractive": {
+    "title": "نمودار دایره‌ای — تعاملی",
+    "subtitleMonths": "ژانویه تا ژوئن ۲۰۲۴",
+    "labels": {
+      "visitors": "بازدیدکننده",
+      "desktop": "دسکتاپ",
+      "mobile": "موبایل"
+    },
+    "months": {
+      "january": "ژانویه",
+      "february": "فوریه",
+      "march": "مارس",
+      "april": "آوریل",
+      "may": "مه"
+    }
+  },
+  "Dashboard": {
+    "title": "داشبورد"
+  },
+  "Cards": {
+    "items": {
+      "freight": {
+        "title": "حجم حمل‌ونقل بار (تن، از ابتدای سال)",
+        "badge": "باربری جاده‌ای"
+      },
+      "passenger": {
+        "title": "حمل‌ونقل مسافر (هزار سفر)",
+        "badge": "حمل‌ونقل عمومی"
+      },
+      "fleet": {
+        "title": "ناوگان فعال (وسایل نقلیه ثبت‌شده)",
+        "badge": "ناوگان خودرو"
+      },
+      "ports": {
+        "title": "ظرفیت بنادر (TEU جابه‌جا شده)",
+        "badge": "بنادر و کشتیرانی"
+      }
+    }
+  },
+  "LoadingPuzzle": {
+    "message": "لطفاً صبور باشید…"
+  },
+  "manifesto": {
+    "header": "مانیفست",
+    "title": "فرم مانیفست",
+    "fields": {
+      "serial": "سریال",
+      "manifestoNo": "شماره مانیفست",
+      "country": "کشور",
+      "manifestDate": "تاریخ مانیفست",
+      "carrierCompany": "شرکت حمل‌کننده",
+      "customsClearanceDate": "تاریخ ترخیص گمرکی",
+      "agentFullName": "نام کامل نماینده",
+      "vesselName": "نام کشتی/وسیله حمل",
+      "notes": "توضیحات"
+    },
+    "placeholders": {
+      "serial": "سریال...",
+      "manifestoNo": "شماره مانیفست...",
+      "country": "انتخاب کشور",
+      "carrierCompany": "نام شرکت حمل...",
+      "agentFullName": "نام و نام خانوادگی نماینده...",
+      "vesselName": "نام کشتی یا وسیله حمل...",
+      "notes": "توضیحات (اختیاری)"
+    },
+    "countries": {
+      "iran": "ایران",
+      "germany": "آلمان",
+      "turkey": "ترکیه",
+      "italy": "ایتالیا",
+      "china": "چین",
+      "uae": "امارات"
+    },
+    "actions": {
+      "save": "ذخیره",
+      "reset": "پاکسازی"
+    },
+    "toast": {
+      "saved": "ذخیره شد!"
+    },
+    "errors": {
+      "serialRequired": "وارد کردن سریال الزامی است.",
+      "manifestoNoRequired": "وارد کردن شماره مانیفست الزامی است.",
+      "countryRequired": "انتخاب کشور الزامی است.",
+      "manifestDateRequired": "تاریخ مانیفست معتبر نیست یا انتخاب نشده است.",
+      "carrierCompanyRequired": "وارد کردن شرکت حمل‌کننده الزامی است.",
+      "customsClearanceDateRequired": "تاریخ ترخیص گمرکی معتبر نیست یا انتخاب نشده است.",
+      "agentFullNameRequired": "وارد کردن نام کامل نماینده الزامی است.",
+      "vesselNameRequired": "وارد کردن نام کشتی/وسیله حمل الزامی است."
+    }
+  },
+  "auth": {
+    "tabs": {
+      "login": "ورود",
+      "signup": "ثبت‌نام"
+    },
+    "title": "به سامانه خوش آمدید",
+    "desc": "برای ادامه، وارد حساب خود شوید یا یک حساب جدید بسازید.",
+    "imageAlt": "تصویر حمل‌ونقل و لجستیک"
+  },
+  "signup": {
+    "fields": {
+      "username": "نام کاربری",
+      "email": "ایمیل",
+      "password": "رمز عبور"
+    },
+    "placeholders": {
+      "username": "مثلاً ali_mn",
+      "email": "you@example.com",
+      "password": "حداقل ۸ کاراکتر"
+    },
+    "actions": {
+      "submit": "ایجاد حساب",
+      "show": "نمایش رمز",
+      "hide": "مخفی کردن رمز"
+    },
+    "toast": {
+      "success": "حساب با موفقیت ایجاد شد."
+    },
+    "errors": {
+      "usernameRequired": "لطفاً نام کاربری را وارد کنید.",
+      "usernameMin": "نام کاربری باید حداقل ۳ کاراکتر باشد.",
+      "usernameMax": "نام کاربری نباید بیشتر از ۳۲ کاراکتر باشد.",
+      "usernameFormat": "فقط حروف، اعداد، نقطه، زیرخط و خط تیره مجاز است.",
+      "emailRequired": "لطفاً ایمیل را وارد کنید.",
+      "emailInvalid": "فرمت ایمیل معتبر نیست.",
+      "passwordRequired": "لطفاً رمز عبور را وارد کنید.",
+      "passwordMin": "رمز عبور باید حداقل ۸ کاراکتر باشد.",
+      "passwordLetter": "رمز عبور باید حداقل یک حرف داشته باشد.",
+      "passwordNumber": "رمز عبور باید حداقل یک عدد داشته باشد."
+    }
+  },
+  "login": {
+    "fields": {
+      "email": "ایمیل",
+      "password": "رمز عبور"
+    },
+    "placeholders": {
+      "email": "you@example.com",
+      "password": "حداقل ۸ کاراکتر"
+    },
+    "actions": {
+      "submit": "ورود",
+      "show": "نمایش رمز",
+      "hide": "مخفی کردن رمز"
+    },
+    "errors": {
+      "emailRequired": "لطفاً ایمیل را وارد کنید.",
+      "emailInvalid": "فرمت ایمیل معتبر نیست.",
+      "passwordRequired": "لطفاً رمز عبور را وارد کنید.",
+      "passwordMin": "رمز عبور باید حداقل ۸ کاراکتر باشد."
+    },
+    "toast": {
+      "success": "با موفقیت وارد شدید."
+    }
+  },
+
+  "notFound": {
+    "title": "صفحه پیدا نشد",
+    "subtitle": "صفحه‌ای که به‌دنبال آن هستید وجود ندارد یا منتقل شده است.",
+    "back": "بازگشت"
+  }
+}

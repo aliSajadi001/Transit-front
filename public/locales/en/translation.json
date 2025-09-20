@@ -1,0 +1,558 @@
+{
+  "navbar": {
+    "menu": "Menu",
+    "open": "Open",
+    "close": "Close",
+    "openSidebar": "Open sidebar",
+    "closeSidebar": "Close sidebar",
+    "mobileOpenTooltip": "Open menu (mobile)",
+    "mobileOpenAria": "Open menu on mobile",
+    "languageSelector": "Language",
+    "chooseLanguage": "Choose language"
+  },
+  "sidebar": {
+    "menuTitle": "Menu",
+    "dashboard": "Dashboard",
+    "users": "Users",
+    "table": "Data Table",
+    "reports": "Reports",
+    "billing": "Billing",
+    "settings": "Settings",
+    "home": "Home",
+    "versionFull": "Version 1.0.0",
+    "versionShort": "v1.0",
+    "aria": {
+      "navigation": "Primary navigation",
+      "openMenu": "Open sidebar menu",
+      "closeMenu": "Close sidebar menu"
+    },
+
+    "basic-data": "Basic Data",
+
+    "manifesto": "Manifesto",
+    "register": "Register"
+  },
+  "navbarInfo": {
+    "title": "Base Data Management",
+    "items": {
+      "types_of_cars": "Types of cars",
+      "colors": "Colors",
+      "countries": "Countries",
+      "destinations": "Destinations",
+      "companies": "Companies",
+      "accessories": "Accessories",
+      "shipping": "Shipping",
+      "clearance_agents": "Clearance agents"
+    }
+  },
+  "companiesTable": {
+    "toolbar": {
+      "searchPlaceholder": "Search name and email...",
+      "manageColumns": "Manage columns ▾",
+      "addNew": "Add"
+    },
+    "columns": {
+      "id": "ID",
+      "name": "Company name",
+      "email": "Email",
+      "actions": "Actions"
+    },
+    "filters": {
+      "placeholder": "Filter..."
+    },
+    "columnsDropdown": {
+      "title": "Show columns",
+      "showAll": "Show all"
+    },
+    "select": {
+      "allRows": "Select all rows",
+      "row": "Select row"
+    },
+    "mobile": {
+      "card": {
+        "select": "Select"
+      }
+    },
+    "pagination": {
+      "first": "First page",
+      "prev": "Previous page",
+      "next": "Next page",
+      "last": "Last page",
+      "page": "Page",
+      "of": "of",
+      "goto": "| Go to page:",
+      "perPage": "Show: {{count}}",
+      "pageSize": "Rows per page"
+    },
+    "rowsCount": "{{count}} rows",
+    "dialog": {
+      "add": {
+        "title": "Add new company",
+        "description": "Enter the new company's information.",
+        "labels": {
+          "name": "Company name",
+          "email": "Email"
+        },
+        "cancel": "Cancel",
+        "submit": "Add"
+      }
+    },
+    "toast": {
+      "errors": {
+        "nameRequired": "Company name is required",
+        "emailInvalid": "Invalid email address"
+      },
+      "success": {
+        "added": "New company added successfully"
+      },
+      "info": {
+        "edited": "Company “{{name}}” was edited"
+      },
+      "delete": "Company “{{name}}” was deleted"
+    }
+  },
+  "dataTable": {
+    "actions": {
+      "menu": {
+        "title": "Actions",
+        "aria": "Actions menu"
+      },
+      "view": "View",
+      "edit": "Edit",
+      "tooltip": {
+        "openMenu": "Open actions menu",
+        "view": "View row details",
+        "edit": "Edit row / Checklist"
+      }
+    },
+    "title": "Data Table",
+    "searchPlaceholder": "Search all columns...",
+    "filters": {
+      "placeholder": "Search…"
+    },
+    "columns": {
+      "id": "ID",
+      "type": "Type",
+      "vehicle": "Vehicle",
+      "date": "Date",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "dateRange": {
+      "short": "Range",
+      "select": "Select date range",
+      "clear": "Clear",
+      "from": "From",
+      "to": "To",
+      "all": "All dates"
+    },
+    "columnsDropdown": {
+      "manage": "Manage columns ▾",
+      "title": "Show columns",
+      "showAll": "Show all",
+      "selectSticky": "The “Select” column is always visible."
+    },
+    "export": {
+      "excel": "Export Excel",
+      "pdf": "Export PDF",
+      "noColumns": "No column enabled for export.",
+      "pdfError": "Error creating PDF",
+      "xlsError": "Error creating Excel",
+      "pdfTitle": "Table Report"
+    },
+    "select": {
+      "allRows": "Select all rows",
+      "row": "Select row"
+    },
+    "mobile": {
+      "select": "Select"
+    },
+    "pagination": {
+      "first": "First page",
+      "prev": "Previous page",
+      "next": "Next page",
+      "last": "Last page",
+      "page": "Page",
+      "of": "of",
+      "goto": "| Go to page:",
+      "perPage": "Show: {{count}}",
+      "pageSize": "Rows per page",
+      "rowsCount": "{{count}} rows"
+    }
+  },
+  "docDetails": {
+    "title": "Document Details",
+    "fields": {
+      "status": "Status",
+      "id": "Document ID",
+      "date": "Date",
+      "type": "Document Type",
+      "vehicle": "Vehicle"
+    },
+    "more": "More details",
+    "actions": {
+      "viewVehicleDetails": "View vehicle details",
+      "downloadInvoiceChecklist": "Download invoice & checklist"
+    },
+    "statusValues": {
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "pending": "Pending"
+    },
+    "fallbacks": {
+      "vehicleAlt": "Vehicle"
+    }
+  },
+  "common": {
+    "yes": "Yes",
+    "no": "No"
+  },
+  "checklist": {
+    "title": "Vehicle Checklist",
+    "registrationInfo": "Registration Info",
+    "vehicleAndModel": "{{vehicle}} - Model {{year}}",
+    "sections": {
+      "availableReservedTitle": "Available / Reserved Parts",
+      "unavailableTitle": "Unavailable Parts"
+    },
+    "messages": {
+      "noAvailableFound": "No available item found",
+      "allAvailable": "All items are available"
+    },
+    "buttons": {
+      "addNote": "Add note",
+      "cancel": "Cancel",
+      "save": "Save"
+    },
+    "headings": {
+      "note": "Note",
+      "borderRepresentative": "Border Representative",
+      "visitChart": "Visit Chart"
+    },
+    "placeholders": {
+      "note": "Enter your note…",
+      "agentName": "Agent name"
+    },
+    "alts": {
+      "visitChart": "Visit chart"
+    },
+    "chart": {
+      "caption": "Vehicle visit diagram"
+    },
+    "parts": {
+      "engineOil": "Engine oil",
+      "airFilter": "Air filter",
+      "brakePads": "Brake pads",
+      "sparkPlugs": "Spark plugs",
+      "battery": "Battery",
+      "wiperBlades": "Wiper blades",
+      "tire": "Tire",
+      "headlight": "Headlight",
+      "radiator": "Radiator",
+      "alternator": "Alternator",
+      "clutchKit": "Clutch kit",
+      "fuelPump": "Fuel pump",
+      "ignitionCoil": "Ignition coil",
+      "oxygenSensor": "Oxygen sensor",
+      "shockAbsorber": "Shock absorber",
+      "starter": "Starter",
+      "thermostat": "Thermostat",
+      "timingBelt": "Timing belt",
+      "waterPump": "Water pump",
+      "wheelBearing": "Wheel bearing",
+      "cabinFilter": "Cabin filter",
+      "cvAxle": "CV axle",
+      "exhaustManifold": "Exhaust manifold",
+      "injector": "Injector",
+      "glowPlug": "Glow plug",
+      "horn": "Horn",
+      "muffler": "Muffler",
+      "pcvValve": "PCV valve",
+      "serpentineBelt": "Serpentine belt",
+      "turbocharger": "Turbocharger"
+    }
+  },
+  "partNote": {
+    "title": "Add note for \"{{part}}\"",
+    "description": "Enter your description/note for this part.",
+    "placeholder": "Note text…",
+    "buttons": {
+      "cancel": "Cancel",
+      "saveNote": "Save note"
+    }
+  },
+  "rowActions": {
+    "aria": {
+      "actionsMenu": "Actions menu"
+    },
+    "menu": {
+      "title": "Actions",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "editDialog": {
+      "title": "Edit Company",
+      "description": "Edit the selected row information.",
+      "fields": {
+        "id": "ID",
+        "name": "Company Name",
+        "email": "Email"
+      },
+      "placeholders": {
+        "name": "Company name...",
+        "email": "email@example.com"
+      }
+    },
+    "deleteDialog": {
+      "title": "Delete Company",
+      "description": "Are you sure you want to delete \"{{name}}\"?"
+    },
+    "common": {
+      "cancel": "Cancel",
+      "save": "Save",
+      "delete": "Delete"
+    }
+  },
+  "chart": {
+    "vehicles": {
+      "title": "Vehicle Segments — Line Chart with Colored Dots",
+      "subtitle": "Sample distribution across segments",
+      "count": "Count",
+      "sedan": "Sedan",
+      "suv": "SUV",
+      "truck": "Truck",
+      "motorcycle": "Motorcycle",
+      "van": "Van",
+      "bus": "Bus",
+      "trend": "Trending up by 5.2% this month",
+      "caption": "Showing total units across segments"
+    }
+  },
+  "chartLineDefault": {
+    "title": "Vehicle Units — Line Chart",
+    "subtitleMonths": "January – June 2024",
+    "oneSeriesLabel": "Units",
+    "trend": "Trending up by 5.2% this month",
+    "captionMonths": "Total vehicle units over the last 6 months",
+    "months": {
+      "january": "January",
+      "february": "February",
+      "march": "March",
+      "april": "April",
+      "may": "May",
+      "june": "June"
+    }
+  },
+  "ChartLineLabelCustom": {
+    "title": "Vehicle Segments — Line Chart (Custom Labels)",
+    "subtitle": "January – June 2024",
+    "trend": "Trending up by 5.2% this month",
+    "caption": "Showing total vehicle units across segments",
+    "labels": {
+      "units": "Units",
+      "sedan": "Sedan",
+      "suv": "SUV",
+      "truck": "Truck",
+      "motorcycle": "Motorcycle",
+      "van": "Van",
+      "other": "Other"
+    }
+  },
+  "ChartLineMultiple": {
+    "title": "Vehicles — Multiple Line Chart",
+    "subtitleMonths": "January – June 2024",
+    "trend": "Trending up by 5.2% this month",
+    "captionMonths": "Passenger vs. commercial units over the last 6 months",
+    "labels": {
+      "passenger": "Passenger",
+      "commercial": "Commercial"
+    },
+    "months": {
+      "january": "January",
+      "february": "February",
+      "march": "March",
+      "april": "April",
+      "may": "May",
+      "june": "June"
+    }
+  },
+  "ChartBarMultiple": {
+    "title": "Vehicles — Multiple Bar Chart",
+    "subtitleMonths": "January – June 2024",
+    "trend": "Trending up by 5.2% this month",
+    "captionMonths": "Passenger vs. commercial units over the last 6 months",
+    "labels": {
+      "passenger": "Passenger",
+      "commercial": "Commercial"
+    },
+    "months": {
+      "january": "January",
+      "february": "February",
+      "march": "March",
+      "april": "April",
+      "may": "May",
+      "june": "June"
+    }
+  },
+  "ChartPieInteractive": {
+    "title": "Pie Chart — Interactive",
+    "subtitleMonths": "January – June 2024",
+    "labels": {
+      "visitors": "Visitors",
+      "desktop": "Desktop",
+      "mobile": "Mobile"
+    },
+    "months": {
+      "january": "January",
+      "february": "February",
+      "march": "March",
+      "april": "April",
+      "may": "May"
+    }
+  },
+  "Dashboard": {
+    "title": "Dashboard"
+  },
+  "Cards": {
+    "items": {
+      "freight": {
+        "title": "Freight transport volume (tons, YTD)",
+        "badge": "Road freight"
+      },
+      "passenger": {
+        "title": "Passenger transport (thousand rides)",
+        "badge": "Public transit"
+      },
+      "fleet": {
+        "title": "Active fleet (registered vehicles)",
+        "badge": "Vehicle fleet"
+      },
+      "ports": {
+        "title": "Port throughput (TEUs handled)",
+        "badge": "Ports & shipping"
+      }
+    }
+  },
+  "LoadingPuzzle": {
+    "message": "Please be patient…"
+  },
+  "manifesto": {
+    "header": "Manifest",
+    "title": "Manifest Form",
+    "fields": {
+      "serial": "Serial",
+      "manifestoNo": "Manifest No.",
+      "country": "Country",
+      "manifestDate": "Manifest Date",
+      "carrierCompany": "Carrier Company",
+      "customsClearanceDate": "Customs Clearance Date",
+      "agentFullName": "Agent Full Name",
+      "vesselName": "Vessel Name",
+      "notes": "Notes"
+    },
+    "placeholders": {
+      "serial": "Serial...",
+      "manifestoNo": "Manifest number...",
+      "country": "Select country",
+      "carrierCompany": "Carrier company name...",
+      "agentFullName": "Agent full name...",
+      "vesselName": "Vessel name...",
+      "notes": "Notes (optional)"
+    },
+    "countries": {
+      "iran": "Iran",
+      "germany": "Germany",
+      "turkey": "Turkey",
+      "italy": "Italy",
+      "china": "China",
+      "uae": "U.A.E."
+    },
+    "actions": {
+      "save": "Save",
+      "reset": "Reset"
+    },
+    "toast": {
+      "saved": "Saved!"
+    },
+    "errors": {
+      "serialRequired": "Serial is required.",
+      "manifestoNoRequired": "Manifest number is required.",
+      "countryRequired": "Country is required.",
+      "manifestDateRequired": "Manifest date is invalid or missing.",
+      "carrierCompanyRequired": "Carrier company is required.",
+      "customsClearanceDateRequired": "Customs clearance date is invalid or missing.",
+      "agentFullNameRequired": "Agent full name is required.",
+      "vesselNameRequired": "Vessel name is required."
+    }
+  },
+  "auth": {
+    "tabs": {
+      "login": "Login",
+      "signup": "Sign up"
+    },
+    "title": "Welcome",
+    "desc": "Log in to your account or create a new one to continue.",
+    "imageAlt": "Logistics & transportation image"
+  },
+  "signup": {
+    "fields": {
+      "username": "Username",
+      "email": "Email",
+      "password": "Password"
+    },
+    "placeholders": {
+      "username": "e.g. ali_mn",
+      "email": "you@example.com",
+      "password": "At least 8 characters"
+    },
+    "actions": {
+      "submit": "Create account",
+      "show": "Show password",
+      "hide": "Hide password"
+    },
+    "toast": {
+      "success": "Account created successfully."
+    },
+    "errors": {
+      "usernameRequired": "Please enter a username.",
+      "usernameMin": "Username must be at least 3 characters.",
+      "usernameMax": "Username must be at most 32 characters.",
+      "usernameFormat": "Only letters, numbers, dot, underscore, and hyphen are allowed.",
+      "emailRequired": "Please enter your email.",
+      "emailInvalid": "Invalid email address.",
+      "passwordRequired": "Please enter a password.",
+      "passwordMin": "Password must be at least 8 characters.",
+      "passwordLetter": "Password must contain at least one letter.",
+      "passwordNumber": "Password must contain at least one number."
+    }
+  },
+  "login": {
+    "fields": {
+      "email": "Email",
+      "password": "Password"
+    },
+    "placeholders": {
+      "email": "you@example.com",
+      "password": "At least 8 characters"
+    },
+    "actions": {
+      "submit": "Sign in",
+      "show": "Show password",
+      "hide": "Hide password"
+    },
+    "errors": {
+      "emailRequired": "Please enter your email.",
+      "emailInvalid": "Invalid email address.",
+      "passwordRequired": "Please enter your password.",
+      "passwordMin": "Password must be at least 8 characters."
+    }
+  },
+  "toast": {
+    "success": "Signed in successfully."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "subtitle": "The page you’re looking for doesn’t exist or has been moved.",
+    "back": "Back"
+  }
+}
