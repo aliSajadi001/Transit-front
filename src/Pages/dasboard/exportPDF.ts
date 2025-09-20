@@ -1,178 +1,247 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { jsPDF as JsPDFType } from "jspdf";
-import type { UserOptions } from "jspdf-autotable";
+/**
+ * exportPDF.ts — خروجی PDF با pdfmake@0.2.20 + VFS
+ * - فونت فارسی از public/fonts فچ و به Base64 تبدیل می‌شود (VFS) → نمایش درست فارسی/عربی.
+ * - محتوا (تیتر و جدول) وسط صفحه (افقی) قرار می‌گیرد.
+ * - Zebra rows: سفید / stone-200 (#e7e5e4).
+ * - اگر دانلود مستقیم کار نکند، با Blob لینک موقت ساخته و دانلود می‌شود.
+ *
+ * پیش‌نیاز فایل‌ها (در وب با / قابل دسترسی‌اند):
+ *   public/fonts/Vazirmatn-Regular.ttf  →  /fonts/Vazirmatn-Regular.ttf
+ *   public/fonts/Vazirmatn-Bold.ttf     →  /fonts/Vazirmatn-Bold.ttf (اختیاری)
+ */
 
-export type PDFExportParams = {
-  headers: (string | number)[];
-  rows: Array<string | number | null | undefined>[];
+export type ExportPDFOptions = {
+  headers: string[];
+  rows: (string | number)[][];
   fileName?: string;
   title?: string;
-  rtl?: boolean;
+  rtl?: boolean; // ← همچنان در تایپ پشتیبانی می‌شود (برای سازگاری با caller)، اما اینجا استفاده نمی‌کنیم
+  landscapeThreshold?: number; // اگر تعداد ستون‌ها >= این مقدار باشد، صفحه Landscape می‌شود
 };
 
-import { VazirmatnBase64 } from "./pdfFontVazirmatn";
+let fontsLoaded = false;
+let fontsLoadingPromise: Promise<void> | null = null;
 
-/** ArrayBuffer -> Base64 */
-function ab2b64(buf: ArrayBuffer): string {
-  let binary = "";
-  const bytes = new Uint8Array(buf);
-  const size = 0x8000;
-  for (let i = 0; i < bytes.length; i += size) {
-    binary += String.fromCharCode(...bytes.subarray(i, i + size));
-  }
-  return btoa(binary);
-}
+export async function exportPDF(options: ExportPDFOptions): Promise<void> {
+  // فقط مقادیر لازم را بردار؛ rtl را عمداً برنداشتیم تا TS6133 ایجاد نشود
+  const {
+    headers,
+    rows,
+    fileName = "table.pdf",
+    title,
+    landscapeThreshold = 7,
+  } = options;
 
-/** ایمپورت سازگار برای jsPDF و autotable (داینامیک) */
-async function importJsPDFCtor() {
-  const mod: any = await import("jspdf");
-  const JsPDFCtor = mod?.jsPDF ?? mod?.default?.jsPDF ?? mod?.default;
-  if (typeof JsPDFCtor !== "function") {
-    throw new Error("jsPDF constructor not found");
-  }
-  // تایپ امن برای سازنده‌ی jsPDF
-  return JsPDFCtor as unknown as new (...args: any[]) => InstanceType<
-    typeof JsPDFType
-  >;
-}
-
-async function importAutoTable() {
-  const mod: any = await import("jspdf-autotable");
-  // امضای تایپی صحیح برای گزینه‌ها
-  return (mod?.default ?? mod) as (doc: any, opts: UserOptions) => void;
-}
-
-/** فونت یونیکد: اگر Base64 نبود، از CDN می‌گیرد */
-async function ensureFont(doc: any, name = "Vazirmatn") {
-  try {
-    let b64 = VazirmatnBase64;
-    if (!b64 || b64.length < 1000) {
-      const url =
-        "https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/Vazirmatn-Regular.ttf";
-      const res = await fetch(url);
-      if (!res.ok) throw new Error("Font CDN fetch failed");
-      b64 = ab2b64(await res.arrayBuffer());
-    }
-    doc.addFileToVFS(`${name}.ttf`, b64);
-    doc.addFont(`${name}.ttf`, name, "normal");
-    doc.setFont(name, "normal");
-  } catch {
-    // ادامه با فونت پیش‌فرض (انگلیسی)
-  }
-}
-
-/** --- Shaping + BiDi برای فارسی/عربی --- */
-const ARABIC_RANGE = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]/;
-
-async function shapeArabicTextIfNeeded(input: string): Promise<string> {
-  if (!ARABIC_RANGE.test(input)) return input;
-
-  let shaped = input;
-
-  // reshape
-  try {
-    const reshaperMod: any = await import("arabic-persian-reshaper");
-    if (typeof reshaperMod?.reshape === "function") {
-      shaped = reshaperMod.reshape(shaped);
-    } else if (typeof reshaperMod?.default === "function") {
-      shaped = reshaperMod.default(shaped);
-    } else if (reshaperMod?.PersianArabicReshaper?.convert) {
-      shaped = reshaperMod.PersianArabicReshaper.convert(shaped);
-    }
-  } catch {
-    // نبود تایپ/ماژول مانع ادامه‌ی کار نمی‌شود
+  if (!headers?.length) {
+    alert("هیچ ستونی برای خروجی وجود ندارد.");
+    throw new Error("No headers provided");
   }
 
-  // bidi reorder
-  try {
-    const bidiMod: any = await import("bidi-js");
-    if (bidiMod?.bidi?.from_string) {
-      shaped = bidiMod.bidi.from_string(shaped).write_reordered();
-    } else if (typeof bidiMod?.default === "function") {
-      shaped = bidiMod.default(shaped);
-    }
-  } catch {
-    // نبود تایپ/ماژول مانع ادامه‌ی کار نمی‌شود
+  // اجرای فقط در مرورگر (نه SSR/Node)
+  if (typeof window === "undefined" || typeof document === "undefined") {
+    alert("ساخت PDF فقط در مرورگر قابل انجام است.");
+    throw new Error("Not a browser environment");
+  }
+  // اجرای مستقیم file:// باعث خطای fetch فونت می‌شود
+  if (location.protocol === "file:") {
+    alert(
+      "اپ را با dev server اجرا کنید؛ اجرای مستقیم file:// جلوی فچ فونت را می‌گیرد."
+    );
+    throw new Error("Running on file://");
   }
 
-  return shaped;
-}
-
-async function shapeAOA(aoa: (string | number)[][]) {
-  const out: (string | number)[][] = [];
-  for (const row of aoa) {
-    const nrow: (string | number)[] = [];
-    for (const cell of row) {
-      if (typeof cell === "string" && ARABIC_RANGE.test(cell)) {
-        nrow.push(await shapeArabicTextIfNeeded(cell));
-      } else {
-        nrow.push(cell ?? "");
-      }
-    }
-    out.push(nrow);
-  }
-  return out;
-}
-
-export async function exportPDF({
-  headers,
-  rows,
-  fileName = "export.pdf",
-  title,
-  rtl = true,
-}: PDFExportParams) {
-  const jsPDF = await importJsPDFCtor();
-  const autoTable = await importAutoTable();
-
-  const doc = new jsPDF({ orientation: "landscape" });
-  await ensureFont(doc, "Vazirmatn");
-
-  // عنوان
-  if (title) {
-    const shapedTitle = await shapeArabicTextIfNeeded(String(title));
-    doc.setFontSize(12);
-    if (rtl) {
-      const w = doc.internal.pageSize.getWidth();
-      doc.text(shapedTitle, w - 14, 12, { align: "right" });
-    } else {
-      doc.text(shapedTitle, 14, 12);
-    }
+  // 1) لود pdfmake
+  const pdfMakeModule = await import("pdfmake/build/pdfmake");
+  const pdfMake = (pdfMakeModule as any).default || (pdfMakeModule as any);
+  if (!pdfMake?.createPdf) {
+    alert("pdfmake به‌درستی بارگذاری نشد.");
+    throw new Error("pdfmake not loaded");
   }
 
-  const headRaw = [headers.map((h) => String(h))];
-  const bodyRaw = rows.map((r) => r.map((v) => (v == null ? "" : String(v))));
+  // 2) یک‌بار فونت‌ها را به VFS لود کن (کش در حافظه برای کلیک‌های بعدی)
+  await ensureFontsInVFS(pdfMake);
 
-  const head = await shapeAOA(headRaw);
-  const body = await shapeAOA(bodyRaw);
+  // 3) بدنه جدول: ردیف اول هدر
+  const body: any[][] = [
+    headers.map((h) => ({
+      text: h == null ? "" : String(h),
+      style: "tableHeader",
+    })),
+    ...rows.map((r) =>
+      r.map((v) => ({
+        text: v == null ? "" : String(v),
+      }))
+    ),
+  ];
 
-  const styles: UserOptions["styles"] = {
-    font: "Vazirmatn",
-    fontSize: 9,
-    halign: rtl ? "right" : "left",
-    valign: "middle",
+  // 4) اورینتیشن بر اساس تعداد ستون‌ها
+  const pageOrientation: "portrait" | "landscape" =
+    headers.length >= landscapeThreshold ? "landscape" : "portrait";
+
+  // 5) تعریف سند
+  const docDef: any = {
+    pageSize: "A4",
+    pageOrientation,
+    pageMargins: [36, 36, 36, 36],
+    defaultStyle: {
+      font: "Vazirmatn",
+      fontSize: 9,
+      alignment: "center", // ⬅️ کل محتوا افقی وسط‌چین
+    },
+    styles: {
+      tableHeader: {
+        bold: true,
+        margin: [0, 4, 0, 4],
+      },
+    },
+    content: [
+      // تیتر (در صورت وجود)
+      title
+        ? {
+            text: String(title),
+            bold: true,
+            fontSize: 13,
+            margin: [0, 0, 0, 10],
+            alignment: "center", // ⬅️ تیتر هم وسط
+          }
+        : undefined,
+
+      // جدول به‌عنوان بلاک وسط صفحه
+      {
+        alignment: "center", // ⬅️ خود بلاک جدول وسط قرار می‌گیرد
+        table: {
+          headerRows: 1,
+          widths: headers.map(() => "auto"), // برای فیت‌شدن نزدیک به محتوا؛ در صورت نیاز "*" بگذار
+          body,
+        },
+        // Zebra + خطوط ملایم
+        layout: {
+          fillColor: (rowIndex: number) => {
+            if (rowIndex === 0) return "#f5f5f5"; // هدر
+            // داده‌ها: یک‌خط‌درمیان سفید / stone-200
+            return rowIndex % 2 === 0 ? "#e7e5e4" : "#ffffff";
+          },
+          hLineColor: () => "#ddd",
+          vLineColor: () => "#eee",
+          hLineWidth: (i: number, node: any) =>
+            i === 0 || i === node.table.body.length ? 1 : 0.5,
+          vLineWidth: () => 0.5,
+          paddingLeft: () => 6,
+          paddingRight: () => 6,
+          paddingTop: () => 4,
+          paddingBottom: () => 4,
+        },
+      },
+    ].filter(Boolean),
   };
 
-  const headStyles: UserOptions["headStyles"] = {
-    fillColor: [76, 81, 191],
-    textColor: 255,
-    halign: rtl ? "right" : "left",
-  };
-
-  const columnStyles: NonNullable<UserOptions["columnStyles"]> = {};
-  for (let i = 0; i < headers.length; i++) {
-    columnStyles[i] = { halign: rtl ? "right" : "left" };
+  // 6) ساخت و دانلود PDF
+  try {
+    const pdf = (pdfMake as any).createPdf(docDef);
+    pdf.download(fileName); // تلاش ۱: دانلود مستقیم
+  } catch {
+    // تلاش ۲: Fallback Blob + <a>
+    await fallbackDownload(pdfMake, docDef, fileName);
   }
+}
 
-  autoTable(doc as any, {
-    head: head as string[][],
-    body: body as string[][],
-    styles,
-    headStyles,
-    columnStyles,
-    margin: { top: title ? 16 : 10, right: 10, left: 10, bottom: 10 },
-    tableLineWidth: 0.1,
-    tableLineColor: 200,
+/* --------------------- Utilities --------------------- */
+
+/** یک‌بار فونت‌ها را از /fonts/... فچ و در VFS ثبت می‌کند */
+async function ensureFontsInVFS(pdfMake: any): Promise<void> {
+  if (fontsLoaded) return;
+  if (fontsLoadingPromise) return fontsLoadingPromise;
+
+  fontsLoadingPromise = (async () => {
+    const regularUrl = "/fonts/Vazirmatn-Regular.ttf";
+    const boldUrl = "/fonts/Vazirmatn-Bold.ttf";
+
+    const regularBase64 = await fetchAsBase64(regularUrl);
+    if (!regularBase64) {
+      alert(
+        `فونت فارسی یافت نشد:\n${regularUrl}\n` +
+          `لطفاً فایل Vazirmatn-Regular.ttf را در public/fonts قرار دهید.`
+      );
+      throw new Error("Regular font not reachable");
+    }
+
+    const boldBase64 = await fetchAsBase64(boldUrl); // اختیاری
+
+    // ثبت فایل‌های فونت در VFS
+    (pdfMake as any).vfs = {
+      ...(pdfMake as any).vfs,
+      "Vazirmatn-Regular.ttf": regularBase64,
+      ...(boldBase64 ? { "Vazirmatn-Bold.ttf": boldBase64 } : {}),
+    };
+
+    // معرفی خانواده فونت
+    (pdfMake as any).fonts = {
+      ...(pdfMake as any).fonts,
+      Vazirmatn: {
+        normal: "Vazirmatn-Regular.ttf",
+        bold: boldBase64 ? "Vazirmatn-Bold.ttf" : "Vazirmatn-Regular.ttf",
+        italics: "Vazirmatn-Regular.ttf",
+        bolditalics: boldBase64
+          ? "Vazirmatn-Bold.ttf"
+          : "Vazirmatn-Regular.ttf",
+      },
+    };
+
+    fontsLoaded = true;
+  })();
+
+  return fontsLoadingPromise;
+}
+
+/** فچ فایل و تبدیل به Base64 خام (بدون data:...) */
+async function fetchAsBase64(url: string): Promise<string | null> {
+  try {
+    const res = await fetch(url, { method: "GET", cache: "no-store" });
+    if (!res.ok) return null;
+    const blob = await res.blob();
+    const dataUrl = await blobToDataUrl(blob); // "data:font/ttf;base64,AAEAAA..."
+    const base64 = String(dataUrl).split(",")[1] || "";
+    return base64 || null;
+  } catch {
+    return null;
+  }
+}
+
+function blobToDataUrl(blob: Blob): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const r = new FileReader();
+    r.onload = () => resolve(String(r.result));
+    r.onerror = reject;
+    r.readAsDataURL(blob);
   });
+}
 
-  doc.save(fileName);
+/** Fallback: ساخت Blob و دانلود دستی */
+async function fallbackDownload(pdfMake: any, docDef: any, fileName: string) {
+  return new Promise<void>((resolve, reject) => {
+    try {
+      const pdf = pdfMake.createPdf(docDef);
+      pdf.getBlob((blob: Blob) => {
+        if (!blob) {
+          alert("ساخت PDF ناموفق بود.");
+          reject(new Error("No blob from pdfmake"));
+          return;
+        }
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = fileName;
+        a.rel = "noopener";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+        resolve();
+      });
+    } catch (err) {
+      alert("ساخت PDF با خطا مواجه شد.");
+      reject(err as Error);
+    }
+  });
 }

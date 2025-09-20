@@ -139,7 +139,7 @@ const TextFilter = React.memo(function TextFilter({
   column,
   placeholder,
 }: {
-  column: Column<DataRow, unknown>; // ✅ فیکس تایپ
+  column: Column<DataRow, unknown>;
   placeholder: string;
 }) {
   const columnFilterValue = column.getFilterValue() as string | undefined;
@@ -206,7 +206,7 @@ const IndeterminateCheckbox = React.memo(function IndeterminateCheckbox({
   );
 });
 
-/* ===================== Date Range Filter (multi-calendar) ===================== */
+/* ===================== Date Range Filter ===================== */
 function DateRangeFilterControl({
   column,
   filterValue,
@@ -214,7 +214,7 @@ function DateRangeFilterControl({
   bundle,
   lang,
 }: {
-  column: Column<DataRow, unknown>; // ✅ فیکس تایپ
+  column: Column<DataRow, unknown>;
   filterValue?: DateRangeFilter;
   t: (k: string, o?: any) => string;
   bundle: CalendarBundle;
@@ -222,7 +222,6 @@ function DateRangeFilterControl({
 }) {
   const ref = useRef<DatePickerRef>(null);
 
-  // تشخیص موبایل
   const [isMobile, setIsMobile] = useState<boolean>(
     typeof window !== "undefined" ? window.innerWidth < 768 : false
   );
@@ -232,7 +231,6 @@ function DateRangeFilterControl({
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
-  // DateObject برای نمایش اولیه
   const startDO = filterValue?.start
     ? new DateObject({
         calendar: bundle.calendar,
@@ -303,7 +301,6 @@ function DateRangeFilterControl({
 
       <span className="text-[11px] md:text-xs text-stone-600">{label}</span>
 
-      {/* DatePicker پنهان (بازش با دکمه) */}
       <DatePicker
         ref={ref as unknown as React.MutableRefObject<any>}
         value={
@@ -409,13 +406,10 @@ function ColumnsDropdown({ table }: { table: Table<DataRow> }) {
             checked={col.getIsVisible()}
             onCheckedChange={() => col.toggleVisibility()}
           >
-            {
-              // ✅ جلوگیری از ارور HeaderContext: از cast امن استفاده می‌کنیم
-              flexRender(
-                col.columnDef.header as any,
-                { column: col, table } as any
-              )
-            }
+            {flexRender(
+              col.columnDef.header as any,
+              { column: col, table } as any
+            )}
           </DropdownMenuCheckboxItem>
         ))}
         <div className="px-2 pt-2 mt-2 text-[11px] text-stone-500">
@@ -451,6 +445,7 @@ function Data(): JSX.Element {
     pdf: false,
     xls: false,
   });
+
   const runSafe = useCallback(
     async (fn: () => Promise<void>, kind: "pdf" | "xls") => {
       try {
@@ -477,7 +472,6 @@ function Data(): JSX.Element {
 
   const columns = useMemo<ColumnDef<DataRow, unknown>[]>(
     () => [
-      // ⬇️ Expander column
       {
         id: "expander",
         header: () => null,
@@ -594,12 +588,8 @@ function Data(): JSX.Element {
         cell: ({ row }) => (
           <RowActions
             data={row.original}
-            onView={(d) => {
-              console.log("VIEW:", d);
-            }}
-            onEdit={(d) => {
-              console.log("EDIT:", d);
-            }}
+            onView={(d) => console.log("VIEW:", d)}
+            onEdit={(d) => console.log("EDIT:", d)}
           />
         ),
         enableSorting: false,
@@ -630,18 +620,15 @@ function Data(): JSX.Element {
     onColumnVisibilityChange: setColumnVisibility,
     enableRowSelection: true,
     autoResetPageIndex: false,
-    // ✅ فیکس: به‌جای رشته، خود تابع
     globalFilterFn: fuzzyFilter,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    // ⬇️ برای ساب‌ردیف
     getExpandedRowModel: getExpandedRowModel(),
     getRowCanExpand: () => true,
   });
 
-  // مقدار فیلتر تاریخ از استیت جدول (برای پاس دادن به کنترل)
   const dateFilterValue: DateRangeFilter | undefined = useMemo(() => {
     const f = columnFilters.find((cf) => cf.id === "date");
     return (f?.value as DateRangeFilter) || undefined;
@@ -660,7 +647,6 @@ function Data(): JSX.Element {
     [table]
   );
 
-  // 🔧 Helper برای برچسب هدر (جهت موبایل) — بدون تغییر UI
   const renderHeaderLabel = useCallback(
     (column: Column<DataRow, unknown>) => {
       const header = table
@@ -676,7 +662,6 @@ function Data(): JSX.Element {
     [table]
   );
 
-  /* ---------- دادهٔ خروجی ---------- */
   const getVisibleDataForExport = () => {
     const visibleCols = table
       .getAllLeafColumns()
@@ -747,11 +732,9 @@ function Data(): JSX.Element {
     );
   };
 
-  // وضعیت PageSize برای Dropdown
   const pageSize = table.getState().pagination.pageSize;
   const changePageSize = (n: number) => table.setPageSize(n);
 
-  // ⬇️ Subcomponent محتوا
   const renderSubComponent = ({ row }: { row: Row<DataRow> }) => {
     return (
       <div className="bg-stone-50 border border-stone-200 rounded-md p-3">
@@ -780,7 +763,7 @@ function Data(): JSX.Element {
             />
           </div>
 
-          {/* ✅ فقط در موبایل DateRange بالای جدول را نشان بده تا در دسکتاپ دوتا نشود */}
+          {/* DateRange فقط در موبایل */}
           {isMobile && (
             <DateRangeFilterControl
               column={table.getColumn("date")!}
@@ -822,7 +805,6 @@ function Data(): JSX.Element {
         {!isMobile && (
           <div className="overflow-x-auto rounded-lg shadow hidden md:block">
             <table className="w-full text-right bg-white rounded-lg">
-              {/* رنگ متن هدر */}
               <thead className="bg-stone-100 text-stone-600">
                 {table.getHeaderGroups().map((headerGroup) => (
                   <tr key={headerGroup.id}>
@@ -846,7 +828,6 @@ function Data(): JSX.Element {
                                 header.column.columnDef.header,
                                 header.getContext()
                               )}
-                              {/* ✅ فیکس ارور index با false */}
                               {header.column.getIsSorted() === "asc"
                                 ? " 🔼"
                                 : header.column.getIsSorted() === "desc"
@@ -975,7 +956,6 @@ function Data(): JSX.Element {
                     .map((cell) => (
                       <Fragment key={cell.id}>
                         <div className="text-[11px] font-medium text-stone-600">
-                          {/* ✅ استفاده از helper برای هدر صحیح (بدون دست‌کاری ساختار) */}
                           {renderHeaderLabel(cell.column)}:
                         </div>
                         <div className="text-xs text-gray-700">
@@ -1081,7 +1061,6 @@ function Data(): JSX.Element {
             />
           </span>
 
-          {/* Dropdown شاد‌سی‌اِن برای PageSize */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="text-xs md:text-sm">

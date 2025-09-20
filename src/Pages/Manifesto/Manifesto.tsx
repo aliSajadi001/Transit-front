@@ -108,14 +108,17 @@ export default function Manifesto() {
     });
   };
 
-  // کلاس‌های پایه برای مرئی بودن بردرها + رینگ واضح + رنگ متن ورودی‌ها
-  const borderBase = "border border-stone-400/70 dark:border-stone-600";
+  // کلاس‌های پایه: بردر روشن‌تر + رینگ واضح + استایل placeholder
+  const borderBase = "border border-stone-400 dark:border-stone-600";
   const focusRing =
-    "focus-visible:ring-2 focus-visible:ring-stone-500 dark:focus-visible:ring-stone-300 focus-visible:outline-none";
-  const baseInputClass = `h-10 ${borderBase} ${focusRing} text-stone-700`;
-  const baseSelectTriggerClass = `h-10 ${borderBase} ${focusRing} text-stone-700`;
-  const baseDateInputClass = `w-full ${borderBase} ${focusRing} text-stone-700 rounded-md bg-background px-3 py-2 text-sm shadow-sm`;
-  const baseTextareaClass = `min-h-28 ${borderBase} ${focusRing} text-stone-700`;
+    "focus-visible:ring-1 focus-visible:ring-stone-400 dark:focus-visible:ring-stone-300 focus-visible:outline-none";
+  const placeholderBase = "placeholder:font-medium placeholder:text-sm";
+  const baseInputClass = `h-10 ${borderBase} ${focusRing} ${placeholderBase} text-stone-700`;
+  const baseSelectTriggerClass = `h-10 ${borderBase} ${focusRing} ${placeholderBase} text-stone-700`;
+  const baseDateInputClass = `w-full ${borderBase} ${focusRing} ${placeholderBase} text-stone-700 rounded-md bg-background px-3 py-2 text-sm shadow-sm`;
+  const baseTextareaClass = `min-h-28 ${borderBase} ${focusRing} ${placeholderBase} text-stone-700`;
+
+  const labelSpaceClass = "mb-2 block"; // فاصله بیشتر بین لیبل و ورودی
 
   return (
     // رپر بیرونی با گرادیان
@@ -139,7 +142,7 @@ export default function Manifesto() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Serial */}
             <div className={dir === "rtl" ? "text-right" : "text-left"}>
-              <Label htmlFor="serial" className="mb-1 block">
+              <Label htmlFor="serial" className={labelSpaceClass}>
                 {t("manifesto.fields.serial")}
               </Label>
               <Input
@@ -162,7 +165,7 @@ export default function Manifesto() {
 
             {/* Manifesto Number */}
             <div className={dir === "rtl" ? "text-right" : "text-left"}>
-              <Label htmlFor="manifestoNo" className="mb-1 block">
+              <Label htmlFor="manifestoNo" className={labelSpaceClass}>
                 {t("manifesto.fields.manifestoNo")}
               </Label>
               <Input
@@ -185,7 +188,7 @@ export default function Manifesto() {
 
             {/* Country (Select) */}
             <div className={dir === "rtl" ? "text-right" : "text-left"}>
-              <Label htmlFor="country" className="mb-1 block">
+              <Label htmlFor="country" className={labelSpaceClass}>
                 {t("manifesto.fields.country")}
               </Label>
               <Controller
@@ -228,7 +231,7 @@ export default function Manifesto() {
 
             {/* Manifest Date (react-multi-date-picker) */}
             <div className={dir === "rtl" ? "text-right" : "text-left"}>
-              <Label htmlFor="manifestDate" className="mb-1 block">
+              <Label htmlFor="manifestDate" className={labelSpaceClass}>
                 {t("manifesto.fields.manifestDate")}
               </Label>
               <Controller
@@ -264,7 +267,7 @@ export default function Manifesto() {
 
             {/* Carrier Company */}
             <div className={dir === "rtl" ? "text-right" : "text-left"}>
-              <Label htmlFor="carrierCompany" className="mb-1 block">
+              <Label htmlFor="carrierCompany" className={labelSpaceClass}>
                 {t("manifesto.fields.carrierCompany")}
               </Label>
               <Input
@@ -287,7 +290,7 @@ export default function Manifesto() {
 
             {/* Customs Clearance Date */}
             <div className={dir === "rtl" ? "text-right" : "text-left"}>
-              <Label htmlFor="customsClearanceDate" className="mb-1 block">
+              <Label htmlFor="customsClearanceDate" className={labelSpaceClass}>
                 {t("manifesto.fields.customsClearanceDate")}
               </Label>
               <Controller
@@ -323,7 +326,7 @@ export default function Manifesto() {
 
             {/* Agent Full Name */}
             <div className={dir === "rtl" ? "text-right" : "text-left"}>
-              <Label htmlFor="agentFullName" className="mb-1 block">
+              <Label htmlFor="agentFullName" className={labelSpaceClass}>
                 {t("manifesto.fields.agentFullName")}
               </Label>
               <Input
@@ -346,7 +349,7 @@ export default function Manifesto() {
 
             {/* Vessel Name */}
             <div className={dir === "rtl" ? "text-right" : "text-left"}>
-              <Label htmlFor="vesselName" className="mb-1 block">
+              <Label htmlFor="vesselName" className={labelSpaceClass}>
                 {t("manifesto.fields.vesselName")}
               </Label>
               <Input
@@ -373,7 +376,7 @@ export default function Manifesto() {
                 dir === "rtl" ? "text-right" : "text-left"
               }`}
             >
-              <Label htmlFor="notes" className="mb-1 block">
+              <Label htmlFor="notes" className={labelSpaceClass}>
                 {t("manifesto.fields.notes")}
               </Label>
               <Textarea
