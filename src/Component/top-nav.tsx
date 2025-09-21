@@ -121,19 +121,20 @@ const TopNav: React.FC<TopNavProps> = ({
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button
-                className="inline-flex items-center gap-2 rounded-lg border px-3 py-2 hover:bg-gray-50"
+                className="inline-flex items-center justify-center text-xs  gap-2 rounded-lg border px-3 py-2 hover:bg-gray-50"
                 aria-label={t("navbar.languageSelector")}
                 title={t("navbar.languageSelector")}
+                
               >
-                <Languages size={18} />
-                <span className="text-sm font-medium">{currentLang.label}</span>
+                <Languages size={16} className="mt-2"/>
+                <span className="text-sm font-medium content-center">{currentLang.label}</span>
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent
               align="center"
               className="min-w-40 bg-white/20 backdrop-blur-sm rounded-lg flex flex-col items-center text-center"
             >
-              <DropdownMenuLabel className="w-full text-center">
+              <DropdownMenuLabel className="w-full text-center text-xs md:text-sm font-medium">
                 {t("navbar.chooseLanguage")}
               </DropdownMenuLabel>
               <DropdownMenuSeparator className="w-full" />
@@ -143,10 +144,9 @@ const TopNav: React.FC<TopNavProps> = ({
                   <DropdownMenuItem
                     key={l.code}
                     onClick={() => handleChangeLang(l.code)}
-                    className="flex items-center justify-center gap-2 w-full"
+                    className={`flex items-center justify-center text-xs md:text-md font-medium gap-2 w-full ${active && "bg-stone-50"}`}
                   >
                     <span>{l.label}</span>
-                    {active && <Check size={16} />}
                   </DropdownMenuItem>
                 );
               })}

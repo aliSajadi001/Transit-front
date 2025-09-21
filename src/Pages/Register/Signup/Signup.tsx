@@ -32,7 +32,7 @@ export default function Signup() {
   const toggleShow = () => setShowPassword((p) => !p);
 
   // استایل‌های پایه
-  const borderBase = "border border-stone-400/70 dark:border-stone-600";
+  const borderBase = "border border-stone-500 dark:border-stone-600";
   const focusRing =
     "focus-visible:ring-2 focus-visible:ring-stone-500 dark:focus-visible:ring-stone-300 focus-visible:outline-none";
   const baseInputClass = `h-10 ${borderBase} ${focusRing} text-stone-500 placeholder:text-stone-500 placeholder:pb-3`;
@@ -58,7 +58,7 @@ export default function Signup() {
     >
       {/* Username */}
       <div className="mb-4 ">
-        <Label htmlFor="signup-username" className="mb-2 block text-stone-500">
+        <Label htmlFor="signup-username" className="mb-2 block text-stone-700">
           {t("signup.fields.username")}
         </Label>
         <Input
@@ -83,7 +83,7 @@ export default function Signup() {
 
       {/* Email */}
       <div className="mb-4">
-        <Label htmlFor="signup-email" className="mb-2 block text-stone-500">
+        <Label htmlFor="signup-email" className="mb-2 block text-stone-700">
           {t("signup.fields.email")}
         </Label>
         <Input
@@ -110,7 +110,7 @@ export default function Signup() {
 
       {/* Password */}
       <div className="mb-6">
-        <Label htmlFor="signup-password" className="mb-2 block text-stone-500">
+        <Label htmlFor="signup-password" className="mb-2 block text-stone-700">
           {t("signup.fields.password")}
         </Label>
 
@@ -135,7 +135,7 @@ export default function Signup() {
             onClick={toggleShow}
             className={`absolute inset-y-0 flex items-center ${
               dir === "rtl" ? "left-2" : "right-2"
-            } text-stone-500 hover:text-stone-700`}
+            } text-stone-500 hover:text-stone-700 `}
             tabIndex={-1}
             aria-label={
               showPassword ? t("signup.actions.hide") : t("signup.actions.show")
@@ -156,7 +156,7 @@ export default function Signup() {
         )}
       </div>
 
-      <Button type="submit" disabled={isSubmitting} className="w-full">
+      <Button type="submit" disabled={isSubmitting} className="w-full bg-stone-600">
         {t("signup.actions.submit")}
       </Button>
     </form>
