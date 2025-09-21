@@ -14,11 +14,11 @@ function Register() {
       <div
         className={`flex flex-col ${
           dir === "rtl" ? "md:flex-row-reverse" : "md:flex-row"
-        } min-h-screen  w-full bg-gradient-to-r  from-stone-200 via-stone-400 to-stone-200 px-3 md:px-0  rounded-lg`}
+        } min-h-screen  w-full bg-gradient-to-r  from-stone-200 via-stone-400 border  to-stone-200 px-3 md:px-0  rounded-lg`}
       >
         {/* تب‌ها: 50% و وسط‌چین کامل */}
         <div className="w-full md:w-1/2 flex items-center justify-center flex-1 md:flex-none">
-          <div className="w-full max-w-md flex items-center justify-center rounded-lg md:p-5 bg-white/20 backdrop:blur-md">
+          <div className="w-full max-w-md flex items-center justify-center rounded-lg md:p-5 p-2 bg-white/20 backdrop:blur-md">
             <Tabs defaultValue="login" className="w-full">
               <TabsList className="grid w-full grid-cols-2 border border-stone-300">
                 <TabsTrigger value="login" className="text-stone-600">
