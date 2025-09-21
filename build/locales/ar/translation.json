@@ -1,0 +1,556 @@
+{
+  "navbar": {
+    "menu": "القائمة",
+    "open": "فتح",
+    "close": "إغلاق",
+    "openSidebar": "فتح الشريط الجانبي",
+    "closeSidebar": "إغلاق الشريط الجانبي",
+    "mobileOpenTooltip": "فتح القائمة (جوال)",
+    "mobileOpenAria": "فتح القائمة على الجوال",
+    "languageSelector": "اللغة",
+    "chooseLanguage": "اختر اللغة"
+  },
+  "sidebar": {
+    "menuTitle": "القائمة",
+    "dashboard": "لوحة التحكم",
+    "users": "المستخدمون",
+    "table": "جدول البيانات",
+    "reports": "التقارير",
+    "billing": "الفوترة",
+    "settings": "الإعدادات",
+    "home": "الصفحة الرئيسية",
+    "versionFull": "الإصدار 1.0.0",
+    "versionShort": "v1.0",
+    "aria": {
+      "navigation": "التنقّل الرئيسي",
+      "openMenu": "فتح قائمة الشريط الجانبي",
+      "closeMenu": "إغلاق قائمة الشريط الجانبي"
+    },
+
+    "manifesto": "البيان",
+    "register": "تسجيل"
+  },
+  "navbarInfo": {
+    "title": "إدارة البيانات الأساسية",
+    "items": {
+      "types_of_cars": "أنواع السيارات",
+      "colors": "الألوان",
+      "countries": "الدول",
+      "destinations": "الوجهات",
+      "companies": "الشركات",
+      "accessories": "الإكسسوارات",
+      "shipping": "الشحن",
+      "clearance_agents": "وكلاء التخليص"
+    }
+  },
+  "companiesTable": {
+    "toolbar": {
+      "searchPlaceholder": "ابحث في الاسم والبريد...",
+      "manageColumns": "إدارة الأعمدة ▾",
+      "addNew": "إضافة"
+    },
+    "columns": {
+      "id": "المعرف",
+      "name": "اسم الشركة",
+      "email": "البريد الإلكتروني",
+      "actions": "إجراءات"
+    },
+    "filters": {
+      "placeholder": "تصفية..."
+    },
+    "columnsDropdown": {
+      "title": "عرض الأعمدة",
+      "showAll": "عرض الكل"
+    },
+    "select": {
+      "allRows": "تحديد كل الصفوف",
+      "row": "تحديد الصف"
+    },
+    "mobile": {
+      "card": {
+        "select": "تحديد"
+      }
+    },
+    "pagination": {
+      "first": "الصفحة الأولى",
+      "prev": "الصفحة السابقة",
+      "next": "الصفحة التالية",
+      "last": "الصفحة الأخيرة",
+      "page": "صفحة",
+      "of": "من",
+      "goto": "| اذهب إلى الصفحة:",
+      "perPage": "عرض: {{count}}",
+      "pageSize": "عدد الصفوف"
+    },
+    "rowsCount": "{{count}} صفًا",
+    "dialog": {
+      "add": {
+        "title": "إضافة شركة جديدة",
+        "description": "أدخل معلومات الشركة الجديدة.",
+        "labels": {
+          "name": "اسم الشركة",
+          "email": "البريد الإلكتروني"
+        },
+        "cancel": "إلغاء",
+        "submit": "إضافة"
+      }
+    },
+    "toast": {
+      "errors": {
+        "nameRequired": "اسم الشركة مطلوب",
+        "emailInvalid": "البريد الإلكتروني غير صالح"
+      },
+      "success": {
+        "added": "تمت إضافة الشركة الجديدة بنجاح"
+      },
+      "info": {
+        "edited": "تم تعديل الشركة «{{name}}»"
+      },
+      "delete": "تم حذف الشركة «{{name}}»"
+    }
+  },
+  "dataTable": {
+    "actions": {
+      "menu": {
+        "title": "إجراءات",
+        "aria": "قائمة الإجراءات"
+      },
+      "view": "عرض",
+      "edit": "تعديل",
+      "tooltip": {
+        "openMenu": "فتح قائمة الإجراءات",
+        "view": "عرض تفاصيل الصف",
+        "edit": "تعديل الصف / قائمة التحقق"
+      }
+    },
+    "title": "جدول البيانات",
+    "searchPlaceholder": "ابحث في جميع الأعمدة...",
+    "filters": {
+      "placeholder": "ابحث..."
+    },
+    "columns": {
+      "id": "المعرف",
+      "type": "النوع",
+      "vehicle": "المركبة",
+      "date": "التاريخ",
+      "status": "الحالة",
+      "actions": "إجراءات"
+    },
+    "dateRange": {
+      "short": "النطاق",
+      "select": "اختر نطاق التاريخ",
+      "clear": "إلغاء",
+      "from": "من",
+      "to": "إلى",
+      "all": "كل التواريخ"
+    },
+    "columnsDropdown": {
+      "manage": "إدارة الأعمدة ▾",
+      "title": "عرض الأعمدة",
+      "showAll": "عرض الكل",
+      "selectSticky": "عمود «التحديد» يظهر دائمًا."
+    },
+    "export": {
+      "excel": "تصدير Excel",
+      "pdf": "تصدير PDF",
+      "noColumns": "لا يوجد أعمدة مفعلة للتصدير.",
+      "pdfError": "خطأ في إنشاء PDF",
+      "xlsError": "خطأ في إنشاء Excel",
+      "pdfTitle": "تقرير الجدول"
+    },
+    "select": {
+      "allRows": "تحديد كل الصفوف",
+      "row": "تحديد الصف"
+    },
+    "mobile": {
+      "select": "تحديد"
+    },
+    "pagination": {
+      "first": "الصفحة الأولى",
+      "prev": "الصفحة السابقة",
+      "next": "الصفحة التالية",
+      "last": "الصفحة الأخيرة",
+      "page": "صفحة",
+      "of": "من",
+      "goto": "| اذهب إلى الصفحة:",
+      "perPage": "عرض: {{count}}",
+      "pageSize": "عدد الصفوف",
+      "rowsCount": "{{count}} صفًا"
+    }
+  },
+  "docDetails": {
+    "title": "تفاصيل المستند",
+    "fields": {
+      "status": "الحالة",
+      "id": "معرّف المستند",
+      "date": "التاريخ",
+      "type": "نوع المستند",
+      "vehicle": "المركبة"
+    },
+    "more": "مزيد من التفاصيل",
+    "actions": {
+      "viewVehicleDetails": "عرض تفاصيل المركبة",
+      "downloadInvoiceChecklist": "تنزيل الفاتورة وقائمة التحقق"
+    },
+    "statusValues": {
+      "approved": "مقبول",
+      "rejected": "مرفوض",
+      "pending": "قيد الانتظار"
+    },
+    "fallbacks": {
+      "vehicleAlt": "المركبة"
+    }
+  },
+  "common": {
+    "yes": "نعم",
+    "no": "لا"
+  },
+  "checklist": {
+    "title": "قائمة فحص المركبة",
+    "registrationInfo": "معلومات التسجيل",
+    "vehicleAndModel": "{{vehicle}} - طراز {{year}}",
+    "sections": {
+      "availableReservedTitle": "القطع المتاحة/المحجوزة",
+      "unavailableTitle": "القطع غير المتاحة"
+    },
+    "messages": {
+      "noAvailableFound": "لا يوجد عنصر متاح",
+      "allAvailable": "كل العناصر متاحة"
+    },
+    "buttons": {
+      "addNote": "إضافة ملاحظة",
+      "cancel": "إلغاء",
+      "save": "حفظ"
+    },
+    "headings": {
+      "note": "ملاحظة",
+      "borderRepresentative": "مندوب الحدود",
+      "visitChart": "مخطط الزيارات"
+    },
+    "placeholders": {
+      "note": "أدخل ملاحظتك…",
+      "agentName": "اسم المندوب"
+    },
+    "alts": {
+      "visitChart": "مخطط الزيارات"
+    },
+    "chart": {
+      "caption": "مخطط زيارة المركبة"
+    },
+    "parts": {
+      "engineOil": "زيت المحرك",
+      "airFilter": "فلتر الهواء",
+      "brakePads": "فرامل (تيل)",
+      "sparkPlugs": "شمعات الإشعال",
+      "battery": "البطارية",
+      "wiperBlades": "مسّاحات الزجاج",
+      "tire": "الإطار",
+      "headlight": "المصباح الأمامي",
+      "radiator": "المبرد",
+      "alternator": "الدينامو",
+      "clutchKit": "طقم القابض",
+      "fuelPump": "مضخة الوقود",
+      "ignitionCoil": "ملف الإشعال",
+      "oxygenSensor": "حساس الأكسجين",
+      "shockAbsorber": "ممتص الصدمات",
+      "starter": "المشغل",
+      "thermostat": "الثرموستات",
+      "timingBelt": "سير التايمنج",
+      "waterPump": "مضخة الماء",
+      "wheelBearing": "رمان البلي",
+      "cabinFilter": "فلتر المقصورة",
+      "cvAxle": "عمود CV",
+      "exhaustManifold": "مجمع العادم",
+      "injector": "الحاقن",
+      "glowPlug": "شمعة التسخين",
+      "horn": "البوق",
+      "muffler": "كواتم العادم",
+      "pcvValve": "صمام PCV",
+      "serpentineBelt": "سير الملحقات",
+      "turbocharger": "شاحن توربيني"
+    }
+  },
+  "partNote": {
+    "title": "إضافة ملاحظة لـ \"{{part}}\"",
+    "description": "أدخل وصفك/ملاحظتك لهذا الجزء.",
+    "placeholder": "نص الملاحظة…",
+    "buttons": {
+      "cancel": "إلغاء",
+      "saveNote": "حفظ الملاحظة"
+    }
+  },
+  "rowActions": {
+    "aria": {
+      "actionsMenu": "قائمة الإجراءات"
+    },
+    "menu": {
+      "title": "إجراءات",
+      "edit": "تعديل",
+      "delete": "حذف"
+    },
+    "editDialog": {
+      "title": "تعديل الشركة",
+      "description": "قم بتعديل معلومات الصف المحدد.",
+      "fields": {
+        "id": "المعرّف",
+        "name": "اسم الشركة",
+        "email": "البريد الإلكتروني"
+      },
+      "placeholders": {
+        "name": "اسم الشركة...",
+        "email": "email@example.com"
+      }
+    },
+    "deleteDialog": {
+      "title": "حذف الشركة",
+      "description": "هل أنت متأكد من حذف \"{{name}}\"؟"
+    },
+    "common": {
+      "cancel": "إلغاء",
+      "save": "حفظ",
+      "delete": "حذف"
+    }
+  },
+  "chart": {
+    "vehicles": {
+      "title": "مخطط خطي لقطاعات المركبات مع نقاط ملوّنة",
+      "subtitle": "توزيع نموذجي عبر القطاعات",
+      "count": "العدد",
+      "sedan": "سيدان",
+      "suv": "دفع رباعي (SUV)",
+      "truck": "شاحنة",
+      "motorcycle": "دراجة نارية",
+      "van": "فان",
+      "bus": "حافلة",
+      "trend": "اتجاه تصاعدي بنسبة 5.2% هذا الشهر",
+      "caption": "عرض الإجمالي عبر القطاعات"
+    }
+  },
+  "chartLineDefault": {
+    "title": "مخطط خطي لعدد المركبات",
+    "subtitleMonths": "يناير – يونيو 2024",
+    "oneSeriesLabel": "العدد",
+    "trend": "اتجاه تصاعدي بنسبة ‎5.2%‎ هذا الشهر",
+    "captionMonths": "إجمالي عدد المركبات خلال آخر 6 أشهر",
+    "months": {
+      "january": "يناير",
+      "february": "فبراير",
+      "march": "مارس",
+      "april": "أبريل",
+      "may": "مايو",
+      "june": "يونيو"
+    }
+  },
+  "ChartLineLabelCustom": {
+    "title": "مخطط خطي لقطاعات المركبات (ملصقات مخصّصة)",
+    "subtitle": "يناير – يونيو 2024",
+    "trend": "اتجاه تصاعدي بنسبة ‎5.2%‎ هذا الشهر",
+    "caption": "عرض إجمالي عدد المركبات عبر القطاعات",
+    "labels": {
+      "units": "العدد",
+      "sedan": "سيدان",
+      "suv": "دفع رباعي (SUV)",
+      "truck": "شاحنة",
+      "motorcycle": "دراجة نارية",
+      "van": "فان",
+      "other": "أخرى"
+    }
+  },
+  "ChartLineMultiple": {
+    "title": "المركبات — مخطط خطي متعدد",
+    "subtitleMonths": "يناير – يونيو 2024",
+    "trend": "اتجاه تصاعدي بنسبة ‎5.2%‎ هذا الشهر",
+    "captionMonths": "مقارنة الركاب مقابل التجاري خلال آخر 6 أشهر",
+    "labels": {
+      "passenger": "ركاب",
+      "commercial": "تجاري"
+    },
+    "months": {
+      "january": "يناير",
+      "february": "فبراير",
+      "march": "مارس",
+      "april": "أبريل",
+      "may": "مايو",
+      "june": "يونيو"
+    }
+  },
+  "ChartBarMultiple": {
+    "title": "المركبات — مخطط أعمدة متعدد",
+    "subtitleMonths": "يناير – يونيو 2024",
+    "trend": "اتجاه تصاعدي بنسبة ‎5.2%‎ هذا الشهر",
+    "captionMonths": "مقارنة سيارات الركاب والتجارية خلال آخر 6 أشهر",
+    "labels": {
+      "passenger": "ركاب",
+      "commercial": "تجاري"
+    },
+    "months": {
+      "january": "يناير",
+      "february": "فبراير",
+      "march": "مارس",
+      "april": "أبريل",
+      "may": "مايو",
+      "june": "يونيو"
+    }
+  },
+  "ChartPieInteractive": {
+    "title": "مخطط دائري — تفاعلي",
+    "subtitleMonths": "يناير – يونيو 2024",
+    "labels": {
+      "visitors": "الزوار",
+      "desktop": "سطح المكتب",
+      "mobile": "الجوال"
+    },
+    "months": {
+      "january": "يناير",
+      "february": "فبراير",
+      "march": "مارس",
+      "april": "أبريل",
+      "may": "مايو"
+    }
+  },
+  "Dashboard": {
+    "title": "لوحة التحكم"
+  },
+  "Cards": {
+    "items": {
+      "freight": {
+        "title": "حجم نقل البضائع (بالأطن، منذ بداية العام)",
+        "badge": "نقل بري للبضائع"
+      },
+      "passenger": {
+        "title": "نقل الركاب (آلاف الرحلات)",
+        "badge": "نقل عام"
+      },
+      "fleet": {
+        "title": "الأسطول النشط (مركبات مسجلة)",
+        "badge": "أسطول المركبات"
+      },
+      "ports": {
+        "title": "مناولة الموانئ (حاويات TEU)",
+        "badge": "الموانئ والشحن"
+      }
+    }
+  },
+  "LoadingPuzzle": {
+    "message": "يرجى التحلّي بالصبر…"
+  },
+  "manifesto": {
+    "header": "بيان الشحنة",
+    "title": "نموذج بيان الشحنة",
+    "fields": {
+      "serial": "الرقم التسلسلي",
+      "manifestoNo": "رقم البيان",
+      "country": "الدولة",
+      "manifestDate": "تاريخ البيان",
+      "carrierCompany": "شركة النقل",
+      "customsClearanceDate": "تاريخ التخليص الجمركي",
+      "agentFullName": "اسم الوكيل الكامل",
+      "vesselName": "اسم السفينة/وسيلة النقل",
+      "notes": "ملاحظات"
+    },
+    "placeholders": {
+      "serial": "الرقم التسلسلي...",
+      "manifestoNo": "رقم البيان...",
+      "country": "اختر الدولة",
+      "carrierCompany": "اسم شركة النقل...",
+      "agentFullName": "اسم الوكيل الكامل...",
+      "vesselName": "اسم السفينة...",
+      "notes": "ملاحظات (اختياري)"
+    },
+    "countries": {
+      "iran": "إيران",
+      "germany": "ألمانيا",
+      "turkey": "تركيا",
+      "italy": "إيطاليا",
+      "china": "الصين",
+      "uae": "الإمارات"
+    },
+    "actions": {
+      "save": "حفظ",
+      "reset": "إعادة تعيين"
+    },
+    "toast": {
+      "saved": "تم الحفظ!"
+    },
+    "errors": {
+      "serialRequired": "حقل الرقم التسلسلي إجباري.",
+      "manifestoNoRequired": "حقل رقم البيان إجباري.",
+      "countryRequired": "اختيار الدولة إجباري.",
+      "manifestDateRequired": "تاريخ البيان غير صالح أو غير مُحدد.",
+      "carrierCompanyRequired": "حقل شركة النقل إجباري.",
+      "customsClearanceDateRequired": "تاريخ التخليص الجمركي غير صالح أو غير مُحدد.",
+      "agentFullNameRequired": "اسم الوكيل الكامل إجباري.",
+      "vesselNameRequired": "اسم السفينة/وسيلة النقل إجباري."
+    }
+  },
+  "auth": {
+    "tabs": {
+      "login": "تسجيل الدخول",
+      "signup": "إنشاء حساب"
+    },
+    "title": "مرحبًا بك",
+    "desc": "سجّل الدخول إلى حسابك أو أنشئ حسابًا جديدًا للمتابعة.",
+    "imageAlt": "صورة للنقل والخدمات اللوجستية"
+  },
+  "signup": {
+    "fields": {
+      "username": "اسم المستخدم",
+      "email": "البريد الإلكتروني",
+      "password": "كلمة المرور"
+    },
+    "placeholders": {
+      "username": "مثال: ali_mn",
+      "email": "you@example.com",
+      "password": "8 أحرف على الأقل"
+    },
+    "actions": {
+      "submit": "إنشاء حساب",
+      "show": "إظهار كلمة المرور",
+      "hide": "إخفاء كلمة المرور"
+    },
+    "toast": {
+      "success": "تم إنشاء الحساب بنجاح."
+    },
+    "errors": {
+      "usernameRequired": "يرجى إدخال اسم المستخدم.",
+      "usernameMin": "يجب أن لا يقل اسم المستخدم عن 3 أحرف.",
+      "usernameMax": "يجب ألا يزيد اسم المستخدم عن 32 حرفًا.",
+      "usernameFormat": "مسموح فقط بالحروف والأرقام والنقطة والشرطة السفلية والشرطة.",
+      "emailRequired": "يرجى إدخال البريد الإلكتروني.",
+      "emailInvalid": "بريد إلكتروني غير صالح.",
+      "passwordRequired": "يرجى إدخال كلمة المرور.",
+      "passwordMin": "يجب أن تكون كلمة المرور من 8 أحرف على الأقل.",
+      "passwordLetter": "يجب أن تحتوي كلمة المرور على حرف واحد على الأقل.",
+      "passwordNumber": "يجب أن تحتوي كلمة المرور على رقم واحد على الأقل."
+    }
+  },
+  "login": {
+    "fields": {
+      "email": "البريد الإلكتروني",
+      "password": "كلمة المرور"
+    },
+    "placeholders": {
+      "email": "you@example.com",
+      "password": "8 أحرف على الأقل"
+    },
+    "actions": {
+      "submit": "تسجيل الدخول",
+      "show": "إظهار كلمة المرور",
+      "hide": "إخفاء كلمة المرور"
+    },
+    "errors": {
+      "emailRequired": "يرجى إدخال البريد الإلكتروني.",
+      "emailInvalid": "بريد إلكتروني غير صالح.",
+      "passwordRequired": "يرجى إدخال كلمة المرور.",
+      "passwordMin": "يجب أن تكون كلمة المرور من 8 أحرف على الأقل."
+    },
+    "toast": {
+      "success": "تم تسجيل الدخول بنجاح."
+    }
+  },
+  "notFound": {
+    "title": "الصفحة غير موجودة",
+    "subtitle": "الصفحة التي تبحث عنها غير موجودة أو تم نقلها.",
+    "back": "رجوع"
+  }
+}
