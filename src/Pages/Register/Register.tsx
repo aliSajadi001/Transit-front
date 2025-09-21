@@ -14,7 +14,7 @@ function Register() {
       <div
         className={`flex flex-col ${
           dir === "rtl" ? "md:flex-row-reverse" : "md:flex-row"
-        } min-h-screen w-full bg-gradient-to-r from-stone-200 via-stone-400 to-stone-200 rounded-lg`}
+        } min-h-screen  w-full bg-gradient-to-r  from-stone-200 via-stone-400 to-stone-200 px-3 md:px-0  rounded-lg`}
       >
         {/* تب‌ها: 50% و وسط‌چین کامل */}
         <div className="w-full md:w-1/2 flex items-center justify-center flex-1 md:flex-none">
@@ -29,11 +29,11 @@ function Register() {
                 </TabsTrigger>
               </TabsList>
 
-              <TabsContent value="login" className="mt-4">
+              <TabsContent value="login" className="mt-4 px-3">
                 <Login />
               </TabsContent>
 
-              <TabsContent value="signup" className="mt-4">
+              <TabsContent value="signup" className="mt-4 px-3">
                 <Signup />
               </TabsContent>
             </Tabs>
