@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { PanelLeftOpen, PanelRightOpen, Languages, Check } from "lucide-react";
+import { PanelLeftOpen, PanelRightOpen, Languages } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Tooltip,
@@ -124,10 +124,11 @@ const TopNav: React.FC<TopNavProps> = ({
                 className="inline-flex items-center justify-center text-xs  gap-2 rounded-lg border px-3 py-2 hover:bg-gray-50"
                 aria-label={t("navbar.languageSelector")}
                 title={t("navbar.languageSelector")}
-                
               >
-                <Languages size={16} className="mt-2"/>
-                <span className="text-sm font-medium content-center">{currentLang.label}</span>
+                <Languages size={16} className="mt-2" />
+                <span className="text-sm font-medium content-center">
+                  {currentLang.label}
+                </span>
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent
@@ -144,7 +145,9 @@ const TopNav: React.FC<TopNavProps> = ({
                   <DropdownMenuItem
                     key={l.code}
                     onClick={() => handleChangeLang(l.code)}
-                    className={`flex items-center justify-center text-xs md:text-md font-medium gap-2 w-full ${active && "bg-stone-50"}`}
+                    className={`flex items-center justify-center text-xs md:text-md font-medium gap-2 w-full ${
+                      active && "bg-stone-50"
+                    }`}
                   >
                     <span>{l.label}</span>
                   </DropdownMenuItem>
