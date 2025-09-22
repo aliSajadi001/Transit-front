@@ -39,7 +39,7 @@ function App() {
           />
 
           {/* main بدون padding-top تا محتوا زیر هدر fixed حرکت کند. */}
-          <main className="flex-1 overflow-auto pt-16 md:px-4 -mt-14">
+          <main className="flex-1 overflow-auto -mt-16">
             <Toaster richColors position="top-center" />
 
             {/* لیزی‌لود همه‌ی مسیرها با فالبک LoadingPuzzle */}

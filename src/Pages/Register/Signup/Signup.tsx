@@ -34,9 +34,9 @@ export default function Signup() {
   // استایل‌های پایه
   const borderBase = "border border-stone-500 dark:border-stone-600";
   const focusRing =
-    "focus-visible:ring-2 focus-visible:ring-stone-500 dark:focus-visible:ring-stone-300 focus-visible:outline-none";
-  const baseInputClass = `h-10 ${borderBase} ${focusRing} text-stone-500 placeholder:text-stone-500 placeholder:pb-3`;
-  const errorClass = "border-red-500 focus-visible:ring-red-500";
+    "focus-visible:ring-2 focus-visible:ring-stone-500 dark:focus-visible:ring-stone-200  dark:focus-visible:ring-stone-300 focus-visible:outline-none";
+  const baseInputClass = `h-10 ${borderBase} ${focusRing} text-stone-500 dark:text-stone-200 placeholder:text-stone-500 dark:placeholder:text-stone-200 placeholder:pb-3`;
+  const errorClass = "border-red-500 focus-visible:ring-red-500 dark:focus-visible:ring-red-800";
 
   const onSubmit = (data: SignupForm) => {
     // اینجا درخواست API خودتان را بزنید
@@ -58,7 +58,7 @@ export default function Signup() {
     >
       {/* Username */}
       <div className="mb-4 ">
-        <Label htmlFor="signup-username" className="mb-2 block text-stone-700">
+        <Label htmlFor="signup-username" className="mb-2 block text-stone-700 dark:text-stone-200">
           {t("signup.fields.username")}
         </Label>
         <Input
@@ -83,7 +83,7 @@ export default function Signup() {
 
       {/* Email */}
       <div className="mb-4">
-        <Label htmlFor="signup-email" className="mb-2 block text-stone-700">
+        <Label htmlFor="signup-email" className="mb-2 block text-stone-700 dark:text-stone-200">
           {t("signup.fields.email")}
         </Label>
         <Input
@@ -110,7 +110,7 @@ export default function Signup() {
 
       {/* Password */}
       <div className="mb-6">
-        <Label htmlFor="signup-password" className="mb-2 block text-stone-700">
+        <Label htmlFor="signup-password" className="mb-2 block text-stone-700 dark:text-stone-200">
           {t("signup.fields.password")}
         </Label>
 
@@ -156,7 +156,7 @@ export default function Signup() {
         )}
       </div>
 
-      <Button type="submit" disabled={isSubmitting} className="w-full bg-stone-600">
+      <Button type="submit" disabled={isSubmitting} className="w-full bg-stone-600 dark:text-stone-200  dark:text-stone-200">
         {t("signup.actions.submit")}
       </Button>
     </form>

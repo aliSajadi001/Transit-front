@@ -8,7 +8,17 @@
     "mobileOpenTooltip": "باز کردن منو (موبایل)",
     "mobileOpenAria": "باز کردن منو در موبایل",
     "languageSelector": "انتخاب زبان",
-    "chooseLanguage": "انتخاب زبان"
+    "chooseLanguage": "انتخاب زبان",
+    "theme": {
+      "toggle": "تغییر حالت نمایش",
+      "tooltip": "تغییر حالت روشن/تاریک",
+      "light": "روشن",
+      "dark": "تاریک",
+      "system": "سیستمی"
+    },
+    "language": {
+      "tooltip": "انتخاب زبان"
+    }
   },
   "sidebar": {
     "menuTitle": "منو",

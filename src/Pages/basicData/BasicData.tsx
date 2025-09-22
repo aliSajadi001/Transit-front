@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable react-refresh/only-export-components */
 
 import React, {
   useState,
@@ -134,7 +133,7 @@ const DebouncedInput = React.memo(function DebouncedInput({
       value={value ?? ""}
       onChange={(e) => setValue(e.target.value)}
       className={
-        "text-xs md:text-sm text-stone-700 placeholder:text-stone-500 focus-visible:ring-stone-400 " +
+        "text-xs md:text-sm text-inherit placeholder:text-stone-500 focus-visible:ring-stone-400 " +
         (className ?? "")
       }
     />
@@ -177,15 +176,16 @@ function ColumnsDropdown({ table }: { table: Table<Company> }) {
       <DropdownMenuTrigger asChild>
         <button
           type="button"
-          className="px-3 py-2 bg-white/90 backdrop-blur border rounded text-xs md:text-sm text-stone-700 hover:bg-stone-50"
+          className="px-3 py-2 bg-white/90 dark:!bg-white/20 backdrop-blur border rounded text-xs md:text-sm hover:bg-stone-50"
           aria-haspopup="menu"
           aria-label={t("companiesTable.toolbar.manageColumns")}
         >
           {t("companiesTable.toolbar.manageColumns")}
         </button>
       </DropdownMenuTrigger>
+
       <DropdownMenuContent align="end" className="w-56">
-        <DropdownMenuLabel className="text-stone-700">
+        <DropdownMenuLabel className="text-inherit">
           {t("companiesTable.columnsDropdown.title")}
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
@@ -205,13 +205,10 @@ function ColumnsDropdown({ table }: { table: Table<Company> }) {
             checked={col.getIsVisible()}
             onCheckedChange={() => col.toggleVisibility()}
           >
-            {
-              // 🔧 اینجا فقط آرگومان context رو به‌صورت امن cast کردیم تا TS ایراد نگیره
-              flexRender(
-                col.columnDef.header as any,
-                { column: col, table } as any
-              )
-            }
+            {flexRender(
+              col.columnDef.header as any,
+              { column: col, table } as any
+            )}
           </DropdownMenuCheckboxItem>
         ))}
       </DropdownMenuContent>
@@ -350,7 +347,7 @@ export default function CompaniesDataTable(): JSX.Element {
             <a
               href={`mailto:${v}`}
               dir="ltr"
-              className="text-stone-700 underline-offset-4 hover:underline break-words"
+              className="text-current visited:text-current underline-offset-4 hover:underline break-words"
             >
               {v}
             </a>
@@ -458,8 +455,8 @@ export default function CompaniesDataTable(): JSX.Element {
   const changePageSize = (n: number) => table.setPageSize(n);
 
   return (
-    <div className="md:p-4 p-0 rounded-lg bg-gradient-to-r from-stone-200 via-stone-400 to-stone-200 min-h-screen flex items-center justify-center">
-      <div className="md:w-[90%] w-full md:rounded-xl md:p-9 p-2 bg-white/30 backdrop-blur-lg border border-stone-200">
+    <div className="dark:bg-gradient-to-r dark:from-neutral-800 dark:via-black dark:to-neutral-800 pt-16 bg-gradient-to-r from-stone-100 via-stone-200 to-stone-100 min-h-screen flex items-center justify-center text-stone-600 dark:text-stone-200">
+      <div className="md:w-[90%] w-full md:p-9 p-2 bg-white/30 dark:bg-black/10 lg border border-stone-200 dark:border-neutral-900 rounded-lg">
         <div className="w-full mb-4">
           <NavbarInfo />
         </div>
@@ -471,7 +468,7 @@ export default function CompaniesDataTable(): JSX.Element {
               value={globalFilter ?? ""}
               onChange={(value) => setGlobalFilter(String(value))}
               placeholder={t("companiesTable.toolbar.searchPlaceholder")}
-              className="border border-stone-300 focus-visible:ring-1 placeholder:pb-3 placeholder:font-medium  "
+              className="border border-stone-300 focus-visible:ring-1 placeholder:pb-3 placeholder:font-medium"
             />
           </div>
 
@@ -494,7 +491,7 @@ export default function CompaniesDataTable(): JSX.Element {
         {/* Desktop table */}
         <div className="overflow-x-auto rounded-lg shadow hidden md:block">
           <table className="w-full text-right bg-white rounded-lg">
-            <thead className="bg-stone-100 text-stone-700 font-medium">
+            <thead className="bg-stone-100 dark:bg-stone-800 font-medium">
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr key={headerGroup.id}>
                   {headerGroup.headers.map((header) => (
@@ -553,12 +550,14 @@ export default function CompaniesDataTable(): JSX.Element {
                 <tr
                   key={row.id}
                   className={
-                    (index % 2 === 0 ? "bg-white" : "bg-stone-50") +
+                    (index % 2 === 0
+                      ? "bg-white dark:bg-stone-700 "
+                      : "bg-stone-50 dark:bg-stone-600 ") +
                     (row.getIsSelected() ? " ring-2 ring-stone-300" : "")
                   }
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <td key={cell.id} className="px-4 py-3 text-stone-700">
+                    <td key={cell.id} className="px-4 py-3">
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -577,42 +576,47 @@ export default function CompaniesDataTable(): JSX.Element {
             <div
               key={row.id}
               className={
-                "bg-white p-4 rounded-lg shadow border " +
+                "bg-white dark:bg-black/10 dark:shadow-md dark:shadow-stone-700 dark:border p-4 rounded-lg shadow  " +
                 (row.getIsSelected()
                   ? "border-stone-400"
                   : "border-transparent")
               }
             >
-              <div className="flex items-center justify-between mb-2">
-                <div className="text-xs text-stone-600">
-                  {t("companiesTable.mobile.card.select")}
+              {/* کل کارت: پیش‌فرض رنگ متن در لایت و دارک */}
+              <div className="text-inherit">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="text-xs text-inherit">
+                    {t("companiesTable.mobile.card.select")}
+                  </div>
+                  <input
+                    type="checkbox"
+                    className="cursor-pointer"
+                    checked={row.getIsSelected()}
+                    onChange={row.getToggleSelectedHandler()}
+                    aria-label={t("companiesTable.select.row")}
+                  />
                 </div>
-                <input
-                  type="checkbox"
-                  className="cursor-pointer"
-                  checked={row.getIsSelected()}
-                  onChange={row.getToggleSelectedHandler()}
-                  aria-label={t("companiesTable.select.row")}
-                />
-              </div>
 
-              <div className="grid grid-cols-2 gap-2">
-                {row
-                  .getVisibleCells()
-                  .filter((cell) => cell.column.id !== "select")
-                  .map((cell) => (
-                    <Fragment key={cell.id}>
-                      <div className="text-[11px] font-medium text-stone-600">
-                        {renderHeaderLabel(cell.column)}:
-                      </div>
-                      <div className="text-xs text-stone-700 break-words">
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </div>
-                    </Fragment>
-                  ))}
+                <div className="grid grid-cols-2 gap-2">
+                  {row
+                    .getVisibleCells()
+                    .filter((cell) => cell.column.id !== "select")
+                    .map((cell) => (
+                      <Fragment key={cell.id}>
+                        {/* لیبل هر فیلد */}
+                        <div className="text-[11px] font-medium text-inherit">
+                          {renderHeaderLabel(cell.column)}:
+                        </div>
+                        {/* مقدار هر فیلد */}
+                        <div className="text-xs break-words text-inherit">
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </div>
+                      </Fragment>
+                    ))}
+                </div>
               </div>
             </div>
           ))}
@@ -643,7 +647,7 @@ export default function CompaniesDataTable(): JSX.Element {
                 p === "..." ? (
                   <span
                     key={`dots-${i}`}
-                    className="px-2 text-stone-500 select-none text-xs md:text-sm"
+                    className="px-2 select-none text-xs md:text-sm"
                   >
                     …
                   </span>
@@ -683,7 +687,7 @@ export default function CompaniesDataTable(): JSX.Element {
             </button>
           </div>
 
-          <span className="flex items-center gap-1 text-xs md:text-sm text-stone-700">
+          <span className="flex items-center gap-1 text-xs md:text-sm">
             <div>{t("companiesTable.pagination.page")}</div>
             <strong className="px-1">
               {table.getState().pagination.pageIndex + 1}{" "}
@@ -692,9 +696,7 @@ export default function CompaniesDataTable(): JSX.Element {
           </span>
 
           <span className="flex items-center gap-1 text-xs md:text-sm">
-            <span className="text-stone-700">
-              {t("companiesTable.pagination.goto")}
-            </span>
+            <span>{t("companiesTable.pagination.goto")}</span>
             <Input
               type="number"
               min={1}
@@ -707,7 +709,7 @@ export default function CompaniesDataTable(): JSX.Element {
                   : Math.min(Math.max(v, 1), table.getPageCount());
                 table.setPageIndex(page - 1);
               }}
-              className="w-20 text-center text-stone-700 placeholder:text-stone-500"
+              className="w-20 text-center text-inherit placeholder:text-stone-500"
             />
           </span>
 
@@ -737,7 +739,7 @@ export default function CompaniesDataTable(): JSX.Element {
           </DropdownMenu>
         </div>
 
-        <div className="mt-4 text-sm text-stone-700">
+        <div className="mt-4 text-sm">
           {t("companiesTable.rowsCount", {
             count: table.getPrePaginationRowModel().rows.length,
           })}
@@ -756,7 +758,7 @@ export default function CompaniesDataTable(): JSX.Element {
 
           <div className="grid gap-3 py-2">
             <div className="space-y-1">
-              <label className="text-sm text-stone-700">
+              <label className="text-sm">
                 {t("companiesTable.dialog.add.labels.name")}
               </label>
               <Input
@@ -768,7 +770,7 @@ export default function CompaniesDataTable(): JSX.Element {
               />
             </div>
             <div className="space-y-1">
-              <label className="text-sm text-stone-700">
+              <label className="text-sm">
                 {t("companiesTable.dialog.add.labels.email")}
               </label>
               <Input

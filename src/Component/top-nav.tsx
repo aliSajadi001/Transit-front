@@ -1,5 +1,11 @@
 import React, { useEffect } from "react";
-import { PanelLeftOpen, PanelRightOpen, Languages } from "lucide-react";
+import {
+  PanelLeftOpen,
+  PanelRightOpen,
+  Languages,
+  Moon,
+  Sun,
+} from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Tooltip,
@@ -14,7 +20,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenu,
 } from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button"; // ⬅️ اضافه شد
 import { useTranslation } from "react-i18next";
+import { useTheme } from "./theme-provider";
 
 interface TopNavProps {
   onToggleDesktop: () => void;
@@ -27,6 +35,48 @@ const LANGS = [
   { code: "en", label: "English", dir: "ltr" as const },
   { code: "ar", label: "العربية", dir: "rtl" as const },
 ];
+
+// ⬇️ مودتاگل با Tooltip
+const ModeToggle: React.FC = () => {
+  const { t } = useTranslation();
+  const { setTheme } = useTheme();
+
+  return (
+    <DropdownMenu>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="outline"
+              className="inline-flex items-center justify-center gap-2 rounded-lg border px-3 py-2 hover:bg-gray-50"
+              aria-label={t("navbar.theme.toggle")}
+              title={t("navbar.theme.toggle")}
+            >
+              <Sun className="h-[1rem] w-[1rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+              <Moon className="absolute h-[1rem] w-[1rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+              <span className="sr-only">{t("navbar.theme.toggle")}</span>
+            </Button>
+          </DropdownMenuTrigger>
+        </TooltipTrigger>
+        <TooltipContent side="bottom">
+          {t("navbar.theme.tooltip")}
+        </TooltipContent>
+      </Tooltip>
+
+      <DropdownMenuContent align="end" className="min-w-32">
+        <DropdownMenuItem onClick={() => setTheme("light")}>
+          {t("navbar.theme.light")}
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("dark")}>
+          {t("navbar.theme.dark")}
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("system")}>
+          {t("navbar.theme.system")}
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+};
 
 const TopNav: React.FC<TopNavProps> = ({
   onToggleDesktop,
@@ -56,7 +106,7 @@ const TopNav: React.FC<TopNavProps> = ({
 
   return (
     // blur + شفافیت برای دیده شدن محتوا زیر نوبار
-    <div className="sticky top-0 z-40 w-full bg-white/20 backdrop-blur-sm border-b">
+    <div className="sticky top-0 z-40 w-full bg-white/20 dark:bg-black/20 backdrop-blur-sm border-b">
       <div className="h-14 px-3 md:px-4 flex items-center justify-between">
         {/* تریگرها */}
         <div className="flex items-center gap-2">
@@ -64,7 +114,7 @@ const TopNav: React.FC<TopNavProps> = ({
           <Tooltip>
             <TooltipTrigger asChild>
               <button
-                className="md:hidden inline-flex items-center gap-2 rounded-lg border px-3 py-2 hover:bg-gray-50"
+                className="md:hidden inline-flex items-center gap-2 rounded-lg border px-3 py-2 hover:bg-gray-50 "
                 onClick={() => {
                   // اطمینان از ست بودن dir برای سایدبار
                   document.documentElement.dir = isRTL ? "rtl" : "ltr";
@@ -89,7 +139,7 @@ const TopNav: React.FC<TopNavProps> = ({
           <Tooltip>
             <TooltipTrigger asChild>
               <button
-                className="hidden md:inline-flex items-center gap-2 rounded-lg border px-3 py-2 hover:bg-gray-50"
+                className="hidden md:inline-flex items-center gap-2 rounded-lg border px-3 py-2 hover:bg-gray-50 dark:hover:bg-neutral-700"
                 onClick={onToggleDesktop}
                 aria-label={
                   isDesktopOpen
@@ -115,22 +165,30 @@ const TopNav: React.FC<TopNavProps> = ({
           </Tooltip>
         </div>
 
-        {/* سمت راست نوبار: انتخاب زبان + آواتار */}
+        {/* سمت راست نوبار: انتخاب زبان + مودتاگل + آواتار */}
         <div className="flex items-center gap-3">
-          {/* دراپ‌داون زبان‌ها */}
+          {/* دراپ‌داون زبان‌ها با Tooltip */}
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button
-                className="inline-flex items-center justify-center text-xs  gap-2 rounded-lg border px-3 py-2 hover:bg-gray-50"
-                aria-label={t("navbar.languageSelector")}
-                title={t("navbar.languageSelector")}
-              >
-                <Languages size={16} className="mt-2" />
-                <span className="text-sm font-medium content-center">
-                  {currentLang.label}
-                </span>
-              </button>
-            </DropdownMenuTrigger>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <DropdownMenuTrigger asChild>
+                  <button
+                    className="inline-flex items-center justify-center text-xs gap-2 rounded-lg border px-3 py-2 hover:bg-gray-50 dark:hover:bg-neutral-700"
+                    aria-label={t("navbar.languageSelector")}
+                    title={t("navbar.languageSelector")}
+                  >
+                    <Languages size={16} className="mt-2" />
+                    <span className="text-sm font-medium content-center">
+                      {currentLang.label}
+                    </span>
+                  </button>
+                </DropdownMenuTrigger>
+              </TooltipTrigger>
+              <TooltipContent side="bottom">
+                {t("navbar.language.tooltip")}
+              </TooltipContent>
+            </Tooltip>
+
             <DropdownMenuContent
               align="center"
               className="min-w-40 bg-white/20 backdrop-blur-sm rounded-lg flex flex-col items-center text-center"
@@ -155,6 +213,9 @@ const TopNav: React.FC<TopNavProps> = ({
               })}
             </DropdownMenuContent>
           </DropdownMenu>
+
+          {/* ⬅️ مودتاگل کنار انتخاب زبان (با Tooltip بالاتر) */}
+          <ModeToggle />
 
           {/* آواتار */}
           <Avatar className="h-9 w-9">

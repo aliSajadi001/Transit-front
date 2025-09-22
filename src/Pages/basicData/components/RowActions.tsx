@@ -62,7 +62,7 @@ export default function RowActions({
           <Button
             variant="outline"
             size="icon"
-            className="h-8 w-8 border-stone-300 text-stone-700 hover:bg-stone-100"
+            className="h-8 w-8 border-stone-300 dark:border-stone-200 text-stone-700 dark:text-stone-200 hover:bg-stone-100"
             title={t("rowActions.aria.actionsMenu")}
             aria-label={t("rowActions.aria.actionsMenu")}
             type="button"

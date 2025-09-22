@@ -11,45 +11,54 @@ function Dashboard() {
   const { t } = useTranslation();
 
   return (
-    <div className="md:p-4 p-0 rounded-lg bg-gradient-to-r from-stone-200 via-stone-400 to-stone-200 min-h-screen flex items-center justify-center">
-      <div className="md:w-[90%] w-full md:rounded-xl md:p-9 p-2 bg-white/20 backdrop-blur-lg border border-stone-200 space-y-6">
+    <main
+      className="dark:bg-gradient-to-r dark:from-neutral-800 dark:via-black dark:to-neutral-800 pt-16 bg-gradient-to-r from-stone-100 via-stone-200 to-stone-100 min-h-screen flex items-center justify-center text-stone-600 dark:text-stone-200"
+      role="main"
+    >
+      <article className="md:w-[90%] w-full md:p-9 p-2 bg-white/30 dark:bg-black/10 lg border border-stone-200 dark:border-neutral-900 rounded-lg space-y-5">
         {/* تیتر داشبورد */}
-        <div className="w-full flex items-center justify-center">
+        <header className="w-full flex items-center justify-center">
           <h2 className="text-2xl font-bold text-stone-500">
             {t("Dashboard.title")}
           </h2>
-        </div>
+        </header>
 
         {/* بخش بالایی - ۴ تا چارت */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
-          <div className="border border-stone-300 bg-stone-50/30 rounded-lg p-2">
-            <ChartLineDotsColors />
+        <section>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div className="border border-stone-300 bg-stone-50/30 rounded-lg p-2">
+              <ChartLineDotsColors />
+            </div>
+            <div className="border border-stone-300 bg-stone-50/30 rounded-lg p-2">
+              <ChartLineDefault />
+            </div>
+            <div className="border border-stone-300 bg-stone-50/30 rounded-lg p-2">
+              <ChartLineLabelCustom />
+            </div>
+            <div className="border border-stone-300 bg-stone-50/30 rounded-lg p-2">
+              <ChartLineMultiple />
+            </div>
           </div>
-          <div className="border border-stone-300 bg-stone-50/30 rounded-lg p-2">
-            <ChartLineDefault />
-          </div>
-          <div className="border border-stone-300 bg-stone-50/30 rounded-lg p-2">
-            <ChartLineLabelCustom />
-          </div>
-          <div className="border border-stone-300 bg-stone-50/30 rounded-lg p-2">
-            <ChartLineMultiple />
-          </div>
-        </div>
+        </section>
 
         {/* بخش پایینی - ۲ تا چارت */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="border border-stone-300 bg-stone-50/30 rounded-lg p-2">
-            <ChartBarMultiple />
+        <section>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div className="border border-stone-300 bg-stone-50/30 rounded-lg p-2">
+              <ChartBarMultiple />
+            </div>
+            <div className="border border-stone-300 bg-stone-50/30 rounded-lg p-2">
+              <ChartPieInteractive />
+            </div>
           </div>
-          <div className="border border-stone-300 bg-stone-50/30 rounded-lg p-2">
-            <ChartPieInteractive />
-          </div>
-        </div>
-        <div>
-          <Cards/>
-        </div>
-      </div>
-    </div>
+        </section>
+
+        {/* کارت‌ها */}
+        <section>
+          <Cards />
+        </section>
+      </article>
+    </main>
   );
 }
 

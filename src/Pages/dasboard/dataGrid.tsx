@@ -51,6 +51,7 @@ import {
   ChevronRight,
   ChevronDown,
   Circle,
+  Calendar,
 } from "lucide-react";
 
 // Mock data/types
@@ -127,7 +128,7 @@ const DebouncedInput = React.memo(function DebouncedInput({
       value={value ?? ""}
       onChange={(e) => setValue(e.target.value)}
       className={
-        "text-xs md:text-sm text-stone-600 placeholder:text-stone-600 " +
+        "text-xs md:text-sm text-stone-600 dark:text-stone-200 placeholder:text-stone-600 " +
         (className ?? "")
       }
     />
@@ -231,6 +232,21 @@ function DateRangeFilterControl({
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
+  // تشخیص تم دارک برای فعال‌سازی تم دارک تقویم (در صورت پشتیبانی پکیج)
+  const [isDark, setIsDark] = useState<boolean>(() =>
+    typeof document !== "undefined"
+      ? document.documentElement.classList.contains("dark")
+      : false
+  );
+  useEffect(() => {
+    const el = document.documentElement;
+    const obs = new MutationObserver(() =>
+      setIsDark(el.classList.contains("dark"))
+    );
+    obs.observe(el, { attributes: true, attributeFilter: ["class"] });
+    return () => obs.disconnect();
+  }, []);
+
   const startDO = filterValue?.start
     ? new DateObject({
         calendar: bundle.calendar,
@@ -276,20 +292,20 @@ function DateRangeFilterControl({
   );
 
   return (
-    <div className="mt-1 flex items-center gap-2">
+    <div className="mt-1 flex items-center gap-2 ">
       <button
         type="button"
-        className="px-2 py-1 border rounded bg-stone-100 text-stone-600 text-[11px]"
+        className="px-2 py-1 border rounded bg-stone-100 text-stone-600 dark:text-stone-600 text-[11px]"
         onClick={() => ref.current?.openCalendar()}
         title={t("dataTable.dateRange.select")}
         aria-label={t("dataTable.dateRange.select")}
       >
-        📅 {t("dataTable.dateRange.short")}
+        <Calendar size={15} /> {t("dataTable.dateRange.short")}
       </button>
 
       <button
         type="button"
-        className="px-2 py-1 border rounded bg-white text-stone-600 text-[11px]"
+        className="px-2 py-1 border rounded bg-white text-stone-600 dark:text-stone-600 text-[11px]"
         onClick={() => {
           column.setFilterValue(undefined);
           ref.current?.closeCalendar?.();
@@ -299,7 +315,9 @@ function DateRangeFilterControl({
         {t("dataTable.dateRange.clear")}
       </button>
 
-      <span className="text-[11px] md:text-xs text-stone-600">{label}</span>
+      <span className="text-[11px] md:text-xs text-stone-600 dark:text-stone-200">
+        {label}
+      </span>
 
       <DatePicker
         ref={ref as unknown as React.MutableRefObject<any>}
@@ -333,6 +351,7 @@ function DateRangeFilterControl({
         portal
         shadow={false}
         inputClass="hidden"
+        className={isDark ? "rmdp-dark" : undefined}
       />
     </div>
   );
@@ -381,7 +400,7 @@ function ColumnsDropdown({ table }: { table: Table<DataRow> }) {
       <DropdownMenuTrigger asChild>
         <button
           type="button"
-          className="px-3 py-2 bg-white/80 backdrop-blur border rounded text-xs md:text-sm text-stone-600"
+          className="px-3 py-2 bg-white/80 dark:bg-white/10 backdrop-blur border rounded text-xs md:text-sm text-stone-600 dark:text-stone-200"
           aria-haspopup="menu"
           aria-label={t("dataTable.columnsDropdown.manage")}
         >
@@ -389,7 +408,7 @@ function ColumnsDropdown({ table }: { table: Table<DataRow> }) {
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
-        <DropdownMenuLabel className="text-stone-600">
+        <DropdownMenuLabel className="text-stone-600 dark:text-stone-200">
           {t("dataTable.columnsDropdown.title")}
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
@@ -412,7 +431,7 @@ function ColumnsDropdown({ table }: { table: Table<DataRow> }) {
             )}
           </DropdownMenuCheckboxItem>
         ))}
-        <div className="px-2 pt-2 mt-2 text-[11px] text-stone-500">
+        <div className="px-2 pt-2 mt-2 text-[11px] text-stone-600 dark:text-stone-200">
           {t("dataTable.columnsDropdown.selectSticky")}
         </div>
       </DropdownMenuContent>
@@ -480,7 +499,7 @@ function Data(): JSX.Element {
             <button
               type="button"
               onClick={row.getToggleExpandedHandler()}
-              className="p-1 text-stone-600 hover:text-stone-800"
+              className="p-1 text-stone-600 dark:text-stone-200 hover:text-stone-800 dark:hover:text-stone-200"
               aria-label={
                 row.getIsExpanded()
                   ? t("dataTable.collapse")
@@ -495,7 +514,7 @@ function Data(): JSX.Element {
               )}
             </button>
           ) : (
-            <Circle size={12} className="text-stone-400" />
+            <Circle size={12} className="text-stone-600 dark:text-stone-200" />
           ),
         enableSorting: false,
         enableColumnFilter: false,
@@ -566,12 +585,12 @@ function Data(): JSX.Element {
           const v = info.getValue<Status>();
           return (
             <span
-              className={`px-2 py-1 rounded text-xs ${
+              className={`px-1 py-[2px]  rounded text-xs ${
                 v === "فعال"
-                  ? "bg-green-100 text-green-700"
+                  ? "bg-green-400 text-green-900 dark:text-green-700"
                   : v === "غیرفعال"
-                  ? "bg-gray-100 text-gray-700"
-                  : "bg-yellow-100 text-yellow-700"
+                  ? "bg-gray-400 text-gray-900 dark:text-gray-700"
+                  : "bg-yellow-400 text-yellow-900 dark:text-yellow-700"
               }`}
             >
               {v}
@@ -746,9 +765,9 @@ function Data(): JSX.Element {
   };
 
   return (
-    <div className="md:p-4 p-0 rounded-lg bg-gradient-to-r from-stone-200 via-stone-400 to-stone-200 min-h-screen flex items-center justify-center">
-      <div className="md:w-[90%] w-full md:rounded-xl md:p-9 p-2 bg-white/30  backdrop-blur-lg">
-        <h1 className="text-2xl font-bold mb-6 text-center text-stone-500 drop-shadow">
+    <div className="dark:bg-gradient-to-r dark:from-neutral-800 dark:via-black dark:to-neutral-800 pt-16 bg-gradient-to-r from-stone-100 via-stone-200 to-stone-100 min-h-screen flex items-center justify-center text-stone-600 dark:text-stone-200">
+      <div className="md:w-[90%] w-full md:p-9 p-2 bg-white/30 dark:bg-black/10 lg border border-stone-200 dark:border-neutral-900 rounded-lg">
+        <h1 className="text-2xl font-bold mb-6 text-center text-stone-600 dark:text-stone-200 drop-shadow">
           {t("dataTable.title")}
         </h1>
 
@@ -780,7 +799,7 @@ function Data(): JSX.Element {
             <button
               type="button"
               onClick={handleExportExcel}
-              className="flex items-center gap-1 px-3 py-2 bg-white/80 backdrop-blur border rounded text-xs md:text-sm hover:bg-white disabled:opacity-60 text-stone-600"
+              className="flex items-center gap-1 px-3 py-2 bg-white/80 dark:bg-white/10 backdrop-blur border rounded text-xs md:text-sm hover:bg-white disabled:opacity-60 text-stone-600 dark:text-stone-200"
               title={t("dataTable.export.excel")}
               disabled={exporting.xls}
             >
@@ -791,7 +810,7 @@ function Data(): JSX.Element {
             <button
               type="button"
               onClick={handleExportPDF}
-              className="flex items-center gap-1 px-3 py-2 bg-white/80 backdrop-blur border rounded text-xs md:text-sm hover:bg-white disabled:opacity-60 text-stone-600"
+              className="flex items-center gap-1 px-3 py-2 bg-white/80 dark:bg-white/10 backdrop-blur border rounded text-xs md:text-sm hover:bg-white disabled:opacity-60 text-stone-600 dark:text-stone-200"
               title={t("dataTable.export.pdf")}
               disabled={exporting.pdf}
             >
@@ -805,7 +824,7 @@ function Data(): JSX.Element {
         {!isMobile && (
           <div className="overflow-x-auto rounded-lg shadow hidden md:block">
             <table className="w-full text-right bg-white rounded-lg">
-              <thead className="bg-stone-100 text-stone-600">
+              <thead className="bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-200">
                 {table.getHeaderGroups().map((headerGroup) => (
                   <tr key={headerGroup.id}>
                     {headerGroup.headers.map((header) => (
@@ -868,12 +887,17 @@ function Data(): JSX.Element {
                   <Fragment key={row.id}>
                     <tr
                       className={
-                        (index % 2 === 0 ? "bg-white" : "bg-gray-50") +
+                        (index % 2 === 0
+                          ? "bg-white dark:bg-stone-700 "
+                          : "bg-stone-50 dark:bg-stone-600 ") +
                         (row.getIsSelected() ? " ring-2 ring-blue-300" : "")
                       }
                     >
                       {row.getVisibleCells().map((cell) => (
-                        <td key={cell.id} className="px-4 py-3 text-gray-700">
+                        <td
+                          key={cell.id}
+                          className="px-4 py-3 text-stone-600 dark:text-stone-200"
+                        >
                           {flexRender(
                             cell.column.columnDef.cell,
                             cell.getContext()
@@ -907,21 +931,21 @@ function Data(): JSX.Element {
               <div
                 key={row.id}
                 className={
-                  "bg-white p-4 rounded-lg shadow border " +
+                  "bg-white dark:bg-black/10 dark:shadow-md dark:shadow-stone-700 dark:border p-4 rounded-lg shadow  " +
                   (row.getIsSelected()
                     ? "border-blue-400"
                     : "border-transparent")
                 }
               >
                 <div className="flex items-center justify-between mb-2">
-                  <div className="text-xs text-gray-600">
+                  <div className="text-xs text-stone-600 dark:text-stone-200">
                     {t("dataTable.mobile.select")}
                   </div>
                   <div className="flex items-center gap-2">
                     <button
                       type="button"
                       onClick={row.getToggleExpandedHandler()}
-                      className="p-1 text-stone-600"
+                      className="p-1 text-stone-600 dark:text-stone-200"
                       aria-expanded={row.getIsExpanded()}
                       aria-label={
                         row.getIsExpanded()
@@ -955,10 +979,10 @@ function Data(): JSX.Element {
                     )
                     .map((cell) => (
                       <Fragment key={cell.id}>
-                        <div className="text-[11px] font-medium text-stone-600">
+                        <div className="text-[11px] font-medium text-stone-600 dark:text-stone-200">
                           {renderHeaderLabel(cell.column)}:
                         </div>
-                        <div className="text-xs text-gray-700">
+                        <div className="text-xs text-stone-600 dark:text-stone-200">
                           {flexRender(
                             cell.column.columnDef.cell,
                             cell.getContext()
@@ -1001,7 +1025,7 @@ function Data(): JSX.Element {
                 p === "..." ? (
                   <span
                     key={`dots-${i}`}
-                    className="px-2 text-gray-500 select-none text-xs md:text-sm"
+                    className="px-2 text-stone-600 dark:text-stone-200  select-none text-xs md:text-sm"
                   >
                     …
                   </span>
@@ -1012,8 +1036,8 @@ function Data(): JSX.Element {
                     className={
                       "border rounded px-2 py-1 text-xs md:text-sm " +
                       (p === table.getState().pagination.pageIndex
-                        ? "bg-blue-500 text-white"
-                        : "bg-white")
+                        ? "bg-blue-500 text-white/10"
+                        : "bg-white/10 ")
                     }
                     aria-label={`Go to page ${p + 1}`}
                   >
@@ -1041,7 +1065,7 @@ function Data(): JSX.Element {
             </button>
           </div>
 
-          <span className="flex items-center gap-1 text-xs md:text-sm text-white">
+          <span className="flex items-center gap-1 text-xs md:text-sm text-stone-600 dark:text-stone-200">
             <div>{t("dataTable.pagination.page")}</div>
             <strong className="px-1">
               {table.getState().pagination.pageIndex + 1}{" "}
@@ -1050,14 +1074,16 @@ function Data(): JSX.Element {
           </span>
 
           <span className="flex items-center gap-1 text-xs md:text-sm">
-            <span className="text-white">{t("dataTable.pagination.goto")}</span>
+            <span className="text-stone-600 dark:text-stone-200">
+              {t("dataTable.pagination.goto")}
+            </span>
             <Input
               type="number"
               min={1}
               max={table.getPageCount()}
               value={table.getState().pagination.pageIndex + 1}
               onChange={goToPageInputOnChange}
-              className="w-20 text-center text-stone-600 placeholder:text-stone-600"
+              className="w-20 text-center text-stone-600 dark:text-stone-200 placeholder:text-stone-600"
             />
           </span>
 
@@ -1084,9 +1110,11 @@ function Data(): JSX.Element {
               </DropdownMenuRadioGroup>
             </DropdownMenuContent>
           </DropdownMenu>
+
+          {/* شمارش ردیف‌ها */}
         </div>
 
-        <div className="mt-4 text-sm text-white">
+        <div className="mt-4 text-sm text-stone-600 dark:text-stone-200">
           {t("dataTable.pagination.rowsCount", {
             count: table.getPrePaginationRowModel().rows.length,
           })}

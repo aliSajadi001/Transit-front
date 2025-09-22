@@ -74,7 +74,7 @@ export default function NavbarInfo() {
             <Link
               key={index}
               to={item.link}
-              className={`relative bg-white w-full md:max-w-[300px] flex items-center p-2 sm:p-3 md:p-4 rounded-lg sm:rounded-xl shadow-md sm:shadow-lg border transition-all duration-300 overflow-hidden group 
+              className={`relative bg-white dark:bg-white/20 w-full md:max-w-[300px] flex items-center p-2 sm:p-3 md:p-4 rounded-lg sm:rounded-xl shadow-md sm:shadow-lg transition-all duration-300 overflow-hidden group 
                 ${
                   isActive
                     ? "bg-stone-700 border-stone-700 text-white"
@@ -111,7 +111,7 @@ export default function NavbarInfo() {
                   <Badge
                     variant="secondary"
                     className={`mt-0.5 sm:mt-1 ${
-                      isActive ? "bg-white text-black" : "group-hover:bg-white"
+                      isActive ? "bg-white text-black" : "group-hover:bg-white dark:group-hover:bg-black"
                     }`}
                   >
                     <p className="transition-colors font-bold text-[10px] xs:text-xs">

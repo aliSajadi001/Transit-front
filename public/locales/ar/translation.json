@@ -8,7 +8,17 @@
     "mobileOpenTooltip": "فتح القائمة (جوال)",
     "mobileOpenAria": "فتح القائمة على الجوال",
     "languageSelector": "اللغة",
-    "chooseLanguage": "اختر اللغة"
+    "chooseLanguage": "اختر اللغة",
+    "language": {
+      "tooltip": "اختر اللغة"
+    },
+    "theme": {
+      "toggle": "تبديل الوضع",
+      "tooltip": "التبديل بين الفاتح/الداكن",
+      "light": "فاتح",
+      "dark": "داكن",
+      "system": "نظام الجهاز"
+    }
   },
   "sidebar": {
     "menuTitle": "القائمة",

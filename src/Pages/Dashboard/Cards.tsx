@@ -79,7 +79,7 @@ export default function Cards() {
             className="border border-stone-400 bg-white/20  rounded-xl p-4 sm:p-4 md:p-5 transition-all duration-300 shadow-stone-500 hover:shadow-md"
           >
             {/* بالا: عنوان */}
-            <div className="text-sm md:text-base font-medium text-stone-600 line-clamp-2">
+            <div className="text-sm md:text-base font-medium text-stone-600 dark:text-stone-200 line-clamp-2">
               {t(`Cards.items.${key}.title`)}
             </div>
 
@@ -87,7 +87,7 @@ export default function Cards() {
             <div className="mt-3 md:mt-4">
               <CountUp
                 end={target}
-                className="text-3xl md:text-4xl font-extrabold tracking-tight text-stone-400 tabular-nums"
+                className="text-3xl md:text-4xl font-extrabold tracking-tight  text-stone-600 dark:text-stone-200 tabular-nums"
               />
             </div>
 
@@ -97,7 +97,7 @@ export default function Cards() {
                 variant="outline"
                 className="inline-flex items-center gap-2 rounded-full px-2.5 py-1"
               >
-                <Icon className="w-5 h-5 text-stone-600" />
+                <Icon className="w-5 h-5  text-stone-600 dark:text-stone-200 " />
                 <span className="text-xs md:text-sm font-medium">
                   {t(`Cards.items.${key}.badge`)}
                 </span>

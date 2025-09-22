@@ -23,7 +23,7 @@ function Register() {
       />
 
       {/* هدر روی تصویر */}
-      <div className={`absolute top-4 ${headerSideClass} max-w-[80%] z-10`}>
+      <div className={`absolute top-4 ${headerSideClass} max-w-[80%] pt-20 z-10`}>
         <h1 className="font-bold text-stone-100 drop-shadow text-base sm:text-lg md:text-2xl lg:text-3xl">
           {t("auth.title")}
         </h1>
@@ -34,7 +34,7 @@ function Register() {
 
       {/* محتوای مرکزی: تب‌ها و فرم‌ها دقیقا وسط صفحه */}
       <div className="min-h-screen w-full flex items-center justify-center px-3 relative z-10 ">
-        <div className="w-full max-w-md rounded-lg md:p-5 p-2 bg-white/70">
+        <div className="w-full max-w-md rounded-lg md:p-5 p-2 bg-white/70 dark:bg-black/70">
           <Tabs defaultValue="login" className="w-full">
             <TabsList className="grid w-full grid-cols-2 border border-stone-300">
               <TabsTrigger value="login" className="text-stone-700">

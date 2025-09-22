@@ -8,7 +8,17 @@
     "mobileOpenTooltip": "Open menu (mobile)",
     "mobileOpenAria": "Open menu on mobile",
     "languageSelector": "Language",
-    "chooseLanguage": "Choose language"
+    "chooseLanguage": "Choose language",
+    "language": {
+      "tooltip": "Choose language"
+    },
+    "theme": {
+      "toggle": "Toggle theme",
+      "tooltip": "Switch light/dark mode",
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    }
   },
   "sidebar": {
     "menuTitle": "Menu",

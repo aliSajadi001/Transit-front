@@ -122,9 +122,8 @@ export default function Manifesto() {
 
   return (
     // رپر بیرونی با گرادیان
-    <div className="md:p-4 p-0 rounded-lg bg-gradient-to-r from-stone-200 via-stone-400 to-stone-200 min-h-screen flex items-center justify-center">
-      {/* ⬇️ رنگ متن همهٔ بخش‌های داخلی */}
-      <div className="md:w-[90%] w-full md:rounded-xl md:p-9 p-2 bg-white/30 backdrop-blur-lg text-stone-400">
+    <div className="dark:bg-gradient-to-r dark:from-neutral-800 dark:via-black dark:to-neutral-800 pt-16 bg-gradient-to-r from-stone-100 via-stone-200 to-stone-100 min-h-screen flex items-center justify-center text-stone-600 dark:text-stone-200">
+      <div className="md:w-[90%] w-full md:p-9 p-2 bg-white/30 dark:bg-black/10 lg border border-stone-200 dark:border-neutral-900 rounded-lg">
         {/* ✅ هدر بالای صفحه: وسط و کمی بزرگ‌تر روی دسکتاپ */}
         <div className="w-full max-w-5xl mx-auto px-4 md:px-6">
           <h1 className="font-bold text-3xl md:text-4xl text-stone-500 text-center">

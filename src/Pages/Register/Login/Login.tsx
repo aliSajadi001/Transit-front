@@ -33,9 +33,9 @@ function Login(): JSX.Element {
   // استایل‌های پایه هماهنگ با پروژه
   const borderBase = "border border-stone-500 dark:border-stone-600";
   const focusRing =
-    "focus-visible:ring-2 focus-visible:ring-stone-500 dark:focus-visible:ring-stone-300 focus-visible:outline-none";
-  const baseInputClass = `h-10 ${borderBase} ${focusRing} text-stone-500 placeholder:text-stone-500 placeholder:pb-3 `;
-  const errorClass = "border-red-500 focus-visible:ring-red-500";
+    "focus-visible:ring-2 focus-visible:ring-stone-500 dark:focus-visible:ring-stone-200  dark:focus-visible:ring-stone-300 focus-visible:outline-none";
+  const baseInputClass = `h-10 ${borderBase} ${focusRing} text-stone-500 dark:text-stone-200 placeholder:text-stone-500 dark:placeholder:text-stone-200 placeholder:pb-3`;
+  const errorClass = "border-red-500 focus-visible:ring-red-500 dark:focus-visible:ring-red-800";
 
   const onSubmit = useCallback(
     (data: LoginForm) => {
@@ -59,7 +59,7 @@ function Login(): JSX.Element {
     >
       {/* Email */}
       <div className="mb-4">
-        <Label htmlFor="login-email" className="mb-2 block text-stone-700">
+        <Label htmlFor="login-email" className="mb-2 block text-stone-700 dark:text-stone-200">
           {t("login.fields.email")}
         </Label>
         <Input
@@ -86,7 +86,7 @@ function Login(): JSX.Element {
 
       {/* Password */}
       <div className="mb-6">
-        <Label htmlFor="login-password" className="mb-2 block text-stone-700">
+        <Label htmlFor="login-password" className="mb-2 block text-stone-700 dark:text-stone-200">
           {t("login.fields.password")}
         </Label>
 
@@ -132,7 +132,7 @@ function Login(): JSX.Element {
         )}
       </div>
 
-      <Button type="submit" disabled={isSubmitting} className="w-full bg-stone-600 font-medium ">
+      <Button type="submit" disabled={isSubmitting} className="w-full bg-stone-600  dark:text-stone-200 font-medium ">
         {t("login.actions.submit")}
       </Button>
     </form>
