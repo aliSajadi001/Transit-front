@@ -15,6 +15,7 @@ const CompaniesDataTable = React.lazy(
 );
 const Data = React.lazy(() => import("./Pages/dasboard/dataGrid"));
 const Manifesto = React.lazy(() => import("./Pages/Manifesto/Manifesto"));
+const StepWizard = React.lazy(() => import("./Pages/WizardForm/StepWizard"));
 
 function App() {
   const [isDesktopOpen, setIsDesktopOpen] = useState(false);
@@ -50,6 +51,7 @@ function App() {
                 <Route path="/" element={<Data />} />
                 <Route path="/manifesto" element={<Manifesto />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/wizard" element={<StepWizard />} />
                 <Route path="*" element={<NotFound />} />
                 {/* سایر Routeها */}
               </Routes>

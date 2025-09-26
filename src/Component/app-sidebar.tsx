@@ -9,7 +9,8 @@ import {
   Truck,
   LayoutDashboard, // ✅ added for dashboard
   Database, // ✅ added for basic-data
-  UserPlus, // ✅ added for register
+  UserPlus,
+  FormInputIcon, // ✅ added for register
 } from "lucide-react";
 import {
   Tooltip,
@@ -27,6 +28,7 @@ const menuItems: MenuItem[] = [
   { path: "/manifesto", icon: FileText, key: "manifesto" },
   { path: "/register", icon: UserPlus, key: "register" },
   { path: "/settings", icon: Settings, key: "settings" },
+  { path: "/wizard", icon: FormInputIcon, key: "wizard" },
 ];
 
 function isRouteActive(currentPath: string, itemPath: string) {

@@ -36,7 +36,7 @@ const LANGS = [
   { code: "ar", label: "العربية", dir: "rtl" as const },
 ];
 
-// ⬇️ مودتاگل با Tooltip
+// ⬇️ مودتاگل با Tooltip — استایل منوی بازشونده دقیقاً مثل منوی زبان
 const ModeToggle: React.FC = () => {
   const { t } = useTranslation();
   const { setTheme } = useTheme();
@@ -48,7 +48,7 @@ const ModeToggle: React.FC = () => {
           <DropdownMenuTrigger asChild>
             <Button
               variant="outline"
-              className="inline-flex items-center justify-center gap-2 rounded-lg border px-3 py-2 hover:bg-gray-50"
+              className="inline-flex items-center justify-center gap-2 rounded-lg border px-3 py-2 hover:bg-gray-50 dark:hover:bg-neutral-700"
               aria-label={t("navbar.theme.toggle")}
               title={t("navbar.theme.toggle")}
             >
@@ -63,14 +63,34 @@ const ModeToggle: React.FC = () => {
         </TooltipContent>
       </Tooltip>
 
-      <DropdownMenuContent align="end" className="min-w-32">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
+      {/* ⬇️ استایل منو دقیقاً همانند منوی زبان */}
+      <DropdownMenuContent
+        align="center"
+        className="min-w-40 bg-white/20 dark:bg-black/20 backdrop-blur-sm rounded-lg flex flex-col items-center text-center"
+      >
+        <DropdownMenuLabel className="w-full text-center text-xs md:text-sm font-medium">
+          {t("navbar.theme.toggle")}
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator className="w-full" />
+
+        <DropdownMenuItem
+          onClick={() => setTheme("light")}
+          className="flex items-center justify-center text-xs md:text-md font-medium gap-2 w-full"
+        >
           {t("navbar.theme.light")}
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
+
+        <DropdownMenuItem
+          onClick={() => setTheme("dark")}
+          className="flex items-center justify-center text-xs md:text-md font-medium gap-2 w-full"
+        >
           {t("navbar.theme.dark")}
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
+
+        <DropdownMenuItem
+          onClick={() => setTheme("system")}
+          className="flex items-center justify-center text-xs md:text-md font-medium gap-2 w-full"
+        >
           {t("navbar.theme.system")}
         </DropdownMenuItem>
       </DropdownMenuContent>
@@ -191,7 +211,7 @@ const TopNav: React.FC<TopNavProps> = ({
 
             <DropdownMenuContent
               align="center"
-              className="min-w-40 bg-white/20 backdrop-blur-sm rounded-lg flex flex-col items-center text-center"
+              className="min-w-40 bg-white/20 dark:bg-black/20 backdrop-blur-sm rounded-lg flex flex-col items-center text-center"
             >
               <DropdownMenuLabel className="w-full text-center text-xs md:text-sm font-medium">
                 {t("navbar.chooseLanguage")}
@@ -204,7 +224,7 @@ const TopNav: React.FC<TopNavProps> = ({
                     key={l.code}
                     onClick={() => handleChangeLang(l.code)}
                     className={`flex items-center justify-center text-xs md:text-md font-medium gap-2 w-full ${
-                      active && "bg-stone-50"
+                      active && "bg-stone-50 dark:bg-stone-500"
                     }`}
                   >
                     <span>{l.label}</span>

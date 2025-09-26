@@ -564,5 +564,21 @@
     "title": "Page not found",
     "subtitle": "The page you’re looking for doesn’t exist or has been moved.",
     "back": "Back"
+  },
+  "wizard": {
+    "title": "Step Wizard Form",
+    "step": "Step",
+    "field": "Field",
+    "inputPlaceholder": "Please enter information for field",
+    "previous": "Previous",
+    "next": "Next",
+    "finish": "Finish",
+    "allStepsCompleted": "All steps completed successfully!",
+    "restart": "Start Over",
+    "loading": "Loading...",
+    "toastMessage": "Form completed successfully!",
+    "errors": {
+      "required": "This field is required"
+    }
   }
 }
