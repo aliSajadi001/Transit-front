@@ -63,7 +63,6 @@ import {
   makeData,
 } from "./mockData";
 import { exportExcel } from "./exportExcel";
-import { exportPDF } from "./exportPDF";
 
 // کامپوننت عملیات
 import RowActions from "./components/RowActions";
@@ -77,6 +76,7 @@ import DateText, {
   formatDateByI18n,
   type CalendarBundle,
 } from "./components/DateText";
+import { exportPDF } from "./exportPDF";
 
 /* ===================== Types ===================== */
 export type DateRangeFilter = { start?: number; end?: number };
@@ -746,6 +746,7 @@ function Data(): JSX.Element {
           fileName: "table.pdf",
           title: t("dataTable.export.pdfTitle"),
           rtl: true,
+          lang: i18n.language,
         }),
       "pdf"
     );

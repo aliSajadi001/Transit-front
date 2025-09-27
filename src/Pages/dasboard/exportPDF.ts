@@ -2,7 +2,8 @@
 /**
  * exportPDF.ts — خروجی PDF با pdfmake@0.2.20 + VFS
  * - فونت فارسی از public/fonts فچ و به Base64 تبدیل می‌شود (VFS) → نمایش درست فارسی/عربی.
- * - محتوا (تیتر و جدول) وسط صفحه (افقی) قرار می‌گیرد.
+ * - RTL/LTR خودکار براساس lang (یا override با rtl).
+ * - جدول تمام‌عرض برگه (pageMargins=0 و widths="*").
  * - Zebra rows: سفید / stone-200 (#e7e5e4).
  * - اگر دانلود مستقیم کار نکند، با Blob لینک موقت ساخته و دانلود می‌شود.
  *
@@ -16,21 +17,29 @@ export type ExportPDFOptions = {
   rows: (string | number)[][];
   fileName?: string;
   title?: string;
-  rtl?: boolean; // ← همچنان در تایپ پشتیبانی می‌شود (برای سازگاری با caller)، اما اینجا استفاده نمی‌کنیم
-  landscapeThreshold?: number; // اگر تعداد ستون‌ها >= این مقدار باشد، صفحه Landscape می‌شود
+  /** اگر ست شود، از این استفاده می‌کنیم؛ وگرنه از lang (fa/ar ⇒ RTL) و در نهایت navigator.language تشخیص می‌دهیم */
+  rtl?: boolean;
+  /** مثل "fa", "ar", "en" ... برای تشخیص خودکار RTL */
+  lang?: string;
+  /** اگر تعداد ستون‌ها >= این مقدار باشد، صفحه Landscape می‌شود (پیش‌فرض: 7) */
+  landscapeThreshold?: number;
+  /** در صورت نیاز قابل override است؛ پیش‌فرض: [0,0,0,0] برای فول‌بلید واقعی */
+  pageMargins?: number | [number, number, number, number];
 };
 
 let fontsLoaded = false;
 let fontsLoadingPromise: Promise<void> | null = null;
 
 export async function exportPDF(options: ExportPDFOptions): Promise<void> {
-  // فقط مقادیر لازم را بردار؛ rtl را عمداً برنداشتیم تا TS6133 ایجاد نشود
   const {
     headers,
     rows,
     fileName = "table.pdf",
     title,
+    lang,
+    rtl,
     landscapeThreshold = 7,
+    pageMargins = [0, 0, 0, 0],
   } = options;
 
   if (!headers?.length) {
@@ -38,18 +47,25 @@ export async function exportPDF(options: ExportPDFOptions): Promise<void> {
     throw new Error("No headers provided");
   }
 
-  // اجرای فقط در مرورگر (نه SSR/Node)
+  // فقط مرورگر
   if (typeof window === "undefined" || typeof document === "undefined") {
     alert("ساخت PDF فقط در مرورگر قابل انجام است.");
     throw new Error("Not a browser environment");
   }
-  // اجرای مستقیم file:// باعث خطای fetch فونت می‌شود
   if (location.protocol === "file:") {
-    alert(
-      "اپ را با dev server اجرا کنید؛ اجرای مستقیم file:// جلوی فچ فونت را می‌گیرد."
-    );
+    alert("اپ را با dev server اجرا کنید؛ اجرای مستقیم file:// جلوی فچ فونت را می‌گیرد.");
     throw new Error("Running on file://");
   }
+
+  // تشخیص RTL
+  const isRtl =
+    typeof rtl === "boolean"
+      ? rtl
+      : typeof lang === "string"
+      ? /^(fa|ar)(-|$)/i.test(lang)
+      : typeof navigator !== "undefined" && navigator.language
+      ? /^(fa|ar)(-|$)/i.test(navigator.language)
+      : false;
 
   // 1) لود pdfmake
   const pdfMakeModule = await import("pdfmake/build/pdfmake");
@@ -59,68 +75,68 @@ export async function exportPDF(options: ExportPDFOptions): Promise<void> {
     throw new Error("pdfmake not loaded");
   }
 
-  // 2) یک‌بار فونت‌ها را به VFS لود کن (کش در حافظه برای کلیک‌های بعدی)
+  // 2) فونت‌ها در VFS
   await ensureFontsInVFS(pdfMake);
 
-  // 3) بدنه جدول: ردیف اول هدر
+  // 3) بدنه جدول با درنظرگرفتن جهت
+  const normalize = (v: unknown) => (v == null ? "" : String(v));
+
+  const normalizedHeaders = headers.map(normalize);
+  const normalizedRows = rows.map((r) => r.map(normalize));
+
+  // برای RTL ستون‌ها را معکوس کن تا ترتیب از راست به چپ شود
+  const headRow = isRtl ? [...normalizedHeaders].reverse() : normalizedHeaders;
+  const bodyRows = isRtl
+    ? normalizedRows.map((r) => [...r].reverse())
+    : normalizedRows;
+
   const body: any[][] = [
-    headers.map((h) => ({
-      text: h == null ? "" : String(h),
-      style: "tableHeader",
-    })),
-    ...rows.map((r) =>
-      r.map((v) => ({
-        text: v == null ? "" : String(v),
-      }))
-    ),
+    headRow.map((h) => ({ text: h, style: "tableHeader" })),
+    ...bodyRows.map((r) => r.map((c) => ({ text: c }))),
   ];
 
   // 4) اورینتیشن بر اساس تعداد ستون‌ها
   const pageOrientation: "portrait" | "landscape" =
     headers.length >= landscapeThreshold ? "landscape" : "portrait";
 
-  // 5) تعریف سند
+  // 5) تعریف سند: تمام‌عرض برگه (margins=0) + ستون‌ها '*' برای پرکردن کل عرض
   const docDef: any = {
     pageSize: "A4",
     pageOrientation,
-    pageMargins: [36, 36, 36, 36],
+    pageMargins, // پیش‌فرض: صفر برای فول‌بلید واقعی
     defaultStyle: {
       font: "Vazirmatn",
       fontSize: 9,
-      alignment: "center", // ⬅️ کل محتوا افقی وسط‌چین
+      alignment: isRtl ? "right" : "left",
     },
     styles: {
       tableHeader: {
         bold: true,
         margin: [0, 4, 0, 4],
+        alignment: isRtl ? "right" : "left",
       },
     },
     content: [
-      // تیتر (در صورت وجود)
       title
         ? {
             text: String(title),
             bold: true,
             fontSize: 13,
-            margin: [0, 0, 0, 10],
-            alignment: "center", // ⬅️ تیتر هم وسط
+            margin: [isRtl ? 8 : 8, 0, isRtl ? 8 : 8, 10],
+            alignment: isRtl ? "right" : "left",
           }
         : undefined,
-
-      // جدول به‌عنوان بلاک وسط صفحه
       {
-        alignment: "center", // ⬅️ خود بلاک جدول وسط قرار می‌گیرد
         table: {
           headerRows: 1,
-          widths: headers.map(() => "auto"), // برای فیت‌شدن نزدیک به محتوا؛ در صورت نیاز "*" بگذار
+          // تمام‌عرض: هر ستون '*'
+          widths: headRow.map(() => "*"),
           body,
         },
-        // Zebra + خطوط ملایم
         layout: {
           fillColor: (rowIndex: number) => {
             if (rowIndex === 0) return "#f5f5f5"; // هدر
-            // داده‌ها: یک‌خط‌درمیان سفید / stone-200
-            return rowIndex % 2 === 0 ? "#e7e5e4" : "#ffffff";
+            return rowIndex % 2 === 0 ? "#e7e5e4" : "#ffffff"; // zebra
           },
           hLineColor: () => "#ddd",
           vLineColor: () => "#eee",
@@ -139,16 +155,14 @@ export async function exportPDF(options: ExportPDFOptions): Promise<void> {
   // 6) ساخت و دانلود PDF
   try {
     const pdf = (pdfMake as any).createPdf(docDef);
-    pdf.download(fileName); // تلاش ۱: دانلود مستقیم
+    pdf.download(fileName); // تلاش ۱
   } catch {
-    // تلاش ۲: Fallback Blob + <a>
-    await fallbackDownload(pdfMake, docDef, fileName);
+    await fallbackDownload(pdfMake, docDef, fileName); // تلاش ۲
   }
 }
 
 /* --------------------- Utilities --------------------- */
 
-/** یک‌بار فونت‌ها را از /fonts/... فچ و در VFS ثبت می‌کند */
 async function ensureFontsInVFS(pdfMake: any): Promise<void> {
   if (fontsLoaded) return;
   if (fontsLoadingPromise) return fontsLoadingPromise;
@@ -168,14 +182,12 @@ async function ensureFontsInVFS(pdfMake: any): Promise<void> {
 
     const boldBase64 = await fetchAsBase64(boldUrl); // اختیاری
 
-    // ثبت فایل‌های فونت در VFS
     (pdfMake as any).vfs = {
       ...(pdfMake as any).vfs,
       "Vazirmatn-Regular.ttf": regularBase64,
       ...(boldBase64 ? { "Vazirmatn-Bold.ttf": boldBase64 } : {}),
     };
 
-    // معرفی خانواده فونت
     (pdfMake as any).fonts = {
       ...(pdfMake as any).fonts,
       Vazirmatn: {
@@ -194,13 +206,12 @@ async function ensureFontsInVFS(pdfMake: any): Promise<void> {
   return fontsLoadingPromise;
 }
 
-/** فچ فایل و تبدیل به Base64 خام (بدون data:...) */
 async function fetchAsBase64(url: string): Promise<string | null> {
   try {
     const res = await fetch(url, { method: "GET", cache: "no-store" });
     if (!res.ok) return null;
     const blob = await res.blob();
-    const dataUrl = await blobToDataUrl(blob); // "data:font/ttf;base64,AAEAAA..."
+    const dataUrl = await blobToDataUrl(blob);
     const base64 = String(dataUrl).split(",")[1] || "";
     return base64 || null;
   } catch {
@@ -217,7 +228,6 @@ function blobToDataUrl(blob: Blob): Promise<string> {
   });
 }
 
-/** Fallback: ساخت Blob و دانلود دستی */
 async function fallbackDownload(pdfMake: any, docDef: any, fileName: string) {
   return new Promise<void>((resolve, reject) => {
     try {
