@@ -746,7 +746,6 @@ function Data(): JSX.Element {
           fileName: "table.pdf",
           title: t("dataTable.export.pdfTitle"),
           rtl: true,
-          lang: i18n.language,
         }),
       "pdf"
     );

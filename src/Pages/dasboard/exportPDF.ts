@@ -2,8 +2,7 @@
 /**
  * exportPDF.ts — خروجی PDF با pdfmake@0.2.20 + VFS
  * - فونت فارسی از public/fonts فچ و به Base64 تبدیل می‌شود (VFS) → نمایش درست فارسی/عربی.
- * - RTL/LTR خودکار براساس lang (یا override با rtl).
- * - جدول تمام‌عرض برگه (pageMargins=0 و widths="*").
+ * - محتوا (تیتر و جدول) وسط صفحه (افقی) قرار می‌گیرد.
  * - Zebra rows: سفید / stone-200 (#e7e5e4).
  * - اگر دانلود مستقیم کار نکند، با Blob لینک موقت ساخته و دانلود می‌شود.
  *
@@ -17,29 +16,21 @@ export type ExportPDFOptions = {
   rows: (string | number)[][];
   fileName?: string;
   title?: string;
-  /** اگر ست شود، از این استفاده می‌کنیم؛ وگرنه از lang (fa/ar ⇒ RTL) و در نهایت navigator.language تشخیص می‌دهیم */
-  rtl?: boolean;
-  /** مثل "fa", "ar", "en" ... برای تشخیص خودکار RTL */
-  lang?: string;
-  /** اگر تعداد ستون‌ها >= این مقدار باشد، صفحه Landscape می‌شود (پیش‌فرض: 7) */
-  landscapeThreshold?: number;
-  /** در صورت نیاز قابل override است؛ پیش‌فرض: [0,0,0,0] برای فول‌بلید واقعی */
-  pageMargins?: number | [number, number, number, number];
+  rtl?: boolean; // ← همچنان در تایپ پشتیبانی می‌شود (برای سازگاری با caller)، اما اینجا استفاده نمی‌کنیم
+  landscapeThreshold?: number; // اگر تعداد ستون‌ها >= این مقدار باشد، صفحه Landscape می‌شود
 };
 
 let fontsLoaded = false;
 let fontsLoadingPromise: Promise<void> | null = null;
 
 export async function exportPDF(options: ExportPDFOptions): Promise<void> {
+  // فقط مقادیر لازم را بردار؛ rtl را عمداً برنداشتیم تا TS6133 ایجاد نشود
   const {
     headers,
     rows,
     fileName = "table.pdf",
     title,
-    lang,
-    rtl,
     landscapeThreshold = 7,
-    pageMargins = [0, 0, 0, 0],
   } = options;
 
   if (!headers?.length) {
@@ -47,25 +38,18 @@ export async function exportPDF(options: ExportPDFOptions): Promise<void> {
     throw new Error("No headers provided");
   }
 
-  // فقط مرورگر
+  // اجرای فقط در مرورگر (نه SSR/Node)
   if (typeof window === "undefined" || typeof document === "undefined") {
     alert("ساخت PDF فقط در مرورگر قابل انجام است.");
     throw new Error("Not a browser environment");
   }
+  // اجرای مستقیم file:// باعث خطای fetch فونت می‌شود
   if (location.protocol === "file:") {
-    alert("اپ را با dev server اجرا کنید؛ اجرای مستقیم file:// جلوی فچ فونت را می‌گیرد.");
+    alert(
+      "اپ را با dev server اجرا کنید؛ اجرای مستقیم file:// جلوی فچ فونت را می‌گیرد."
+    );
     throw new Error("Running on file://");
   }
-
-  // تشخیص RTL
-  const isRtl =
-    typeof rtl === "boolean"
-      ? rtl
-      : typeof lang === "string"
-      ? /^(fa|ar)(-|$)/i.test(lang)
-      : typeof navigator !== "undefined" && navigator.language
-      ? /^(fa|ar)(-|$)/i.test(navigator.language)
-      : false;
 
   // 1) لود pdfmake
   const pdfMakeModule = await import("pdfmake/build/pdfmake");
@@ -75,45 +59,92 @@ export async function exportPDF(options: ExportPDFOptions): Promise<void> {
     throw new Error("pdfmake not loaded");
   }
 
-  // 2) فونت‌ها در VFS
+  // 2) یک‌بار فونت‌ها را به VFS لود کن (کش در حافظه برای کلیک‌های بعدی)
   await ensureFontsInVFS(pdfMake);
 
-  // 3) بدنه جدول با درنظرگرفتن جهت
-  const normalize = (v: unknown) => (v == null ? "" : String(v));
+  /* ===================== فقط همین بخش: جابه‌جایی ستون شناسه (id) ===================== */
+  // تشخیص زبان از localStorage و تعیین RTL/LTR
+  const lng =
+    ((): string | null => {
+      try {
+        return localStorage.getItem("i18nextLng");
+      } catch {
+        return null;
+      }
+    })() || (typeof navigator !== "undefined" ? navigator.language : "en");
 
-  const normalizedHeaders = headers.map(normalize);
-  const normalizedRows = rows.map((r) => r.map(normalize));
+  const isRtl = /^(fa|ar)(-|$)/i.test(String(lng));
 
-  // برای RTL ستون‌ها را معکوس کن تا ترتیب از راست به چپ شود
-  const headRow = isRtl ? [...normalizedHeaders].reverse() : normalizedHeaders;
-  const bodyRows = isRtl
-    ? normalizedRows.map((r) => [...r].reverse())
-    : normalizedRows;
+  // نرمال‌سازی به رشته
+  const H = headers.map((h) => (h == null ? "" : String(h)));
+  const R = rows.map((r) => r.map((v) => (v == null ? "" : String(v))));
 
+  // پیداکردن ایندکس ستون شناسه از روی هدر (id/شناسه/المعرف/کد/code)
+  const idIndex = (() => {
+    const norm = (s: string) =>
+      s
+        .toLowerCase()
+        .replace(/\s+/g, "")
+        // eslint-disable-next-line no-useless-escape
+        .replace(/[ـ_\-]+/g, "")
+        .replace(/[^\p{L}\p{N}]/gu, "");
+    const keys = new Set(
+      ["id", "شناسه", "المعرف", "معرف", "کد", "كد", "code"].map(norm)
+    );
+    return H.findIndex((h) => keys.has(norm(h)));
+  })();
+
+  // اگر ستون شناسه پیدا شد، ترتیب ستون‌ها را طوری می‌چینیم که:
+  // - در زبان‌های LTR (مثل en) ستون id در چپ (ابتدا) باشد
+  // - در زبان‌های RTL (fa/ar) ستون id در راست (انتها) باشد
+  let finalHeaders = H;
+  let finalRows = R;
+
+  if (idIndex !== -1) {
+    const order = Array.from({ length: H.length }, (_, i) => i).filter(
+      (i) => i !== idIndex
+    );
+    if (isRtl) order.push(idIndex);
+    else order.unshift(idIndex);
+
+    finalHeaders = order.map((i) => H[i]);
+    finalRows = R.map((r) => order.map((i) => r[i]));
+  }
+  /* ===================== پایان بخش تغییر ستون id ===================== */
+
+  // 3) بدنه جدول: ردیف اول هدر (با ترتیب نهایی)
   const body: any[][] = [
-    headRow.map((h) => ({ text: h, style: "tableHeader" })),
-    ...bodyRows.map((r) => r.map((c) => ({ text: c }))),
+    finalHeaders.map((h) => ({
+      text: h == null ? "" : String(h),
+      style: "tableHeader",
+    })),
+    ...finalRows.map((r) =>
+      r.map((v) => ({
+        text: v == null ? "" : String(v),
+      }))
+    ),
   ];
 
   // 4) اورینتیشن بر اساس تعداد ستون‌ها
   const pageOrientation: "portrait" | "landscape" =
     headers.length >= landscapeThreshold ? "landscape" : "portrait";
 
-  // 5) تعریف سند: تمام‌عرض برگه (margins=0) + ستون‌ها '*' برای پرکردن کل عرض
+  // 5) تعریف سند — فقط این دو تغییر:
+  //    - pageMargins: [20,0,20,0]  ← فقط padding افقی 20px
+  //    - widths: "*" برای پر کردن کل عرض
   const docDef: any = {
     pageSize: "A4",
     pageOrientation,
-    pageMargins, // پیش‌فرض: صفر برای فول‌بلید واقعی
+    pageMargins: [20, 0, 20, 0],
     defaultStyle: {
       font: "Vazirmatn",
       fontSize: 9,
-      alignment: isRtl ? "right" : "left",
+      alignment: "center",
     },
     styles: {
       tableHeader: {
         bold: true,
         margin: [0, 4, 0, 4],
-        alignment: isRtl ? "right" : "left",
       },
     },
     content: [
@@ -122,21 +153,21 @@ export async function exportPDF(options: ExportPDFOptions): Promise<void> {
             text: String(title),
             bold: true,
             fontSize: 13,
-            margin: [isRtl ? 8 : 8, 0, isRtl ? 8 : 8, 10],
-            alignment: isRtl ? "right" : "left",
+            margin: [0, 0, 0, 10],
+            alignment: "center",
           }
         : undefined,
       {
+        alignment: "center",
         table: {
           headerRows: 1,
-          // تمام‌عرض: هر ستون '*'
-          widths: headRow.map(() => "*"),
+          widths: finalHeaders.map(() => "*"), // ← تمام‌عرض
           body,
         },
         layout: {
           fillColor: (rowIndex: number) => {
-            if (rowIndex === 0) return "#f5f5f5"; // هدر
-            return rowIndex % 2 === 0 ? "#e7e5e4" : "#ffffff"; // zebra
+            if (rowIndex === 0) return "#f5f5f5";
+            return rowIndex % 2 === 0 ? "#e7e5e4" : "#ffffff";
           },
           hLineColor: () => "#ddd",
           vLineColor: () => "#eee",
@@ -155,9 +186,9 @@ export async function exportPDF(options: ExportPDFOptions): Promise<void> {
   // 6) ساخت و دانلود PDF
   try {
     const pdf = (pdfMake as any).createPdf(docDef);
-    pdf.download(fileName); // تلاش ۱
+    pdf.download(fileName);
   } catch {
-    await fallbackDownload(pdfMake, docDef, fileName); // تلاش ۲
+    await fallbackDownload(pdfMake, docDef, fileName);
   }
 }
 
@@ -175,7 +206,7 @@ async function ensureFontsInVFS(pdfMake: any): Promise<void> {
     if (!regularBase64) {
       alert(
         `فونت فارسی یافت نشد:\n${regularUrl}\n` +
-          `لطفاً فایل Vazirmatn-Regular.ttf را در public/fonts قرار دهید.`
+          `لطفاً файл Vazirmatn-Regular.ttf را در public/fonts قرار دهید.`
       );
       throw new Error("Regular font not reachable");
     }
