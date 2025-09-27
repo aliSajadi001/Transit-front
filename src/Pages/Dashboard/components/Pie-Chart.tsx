@@ -79,10 +79,10 @@ export function ChartPieInteractive() {
       <ChartStyle id={id} config={chartConfig} />
       <div className="flex items-center justify-between">
         <div className="grid gap-1">
-          <h3 className="text-lg font-semibold">
+          <h3 className="text-lg font-semibold dark:text-stone-500">
             {t("ChartPieInteractive.title")}
           </h3>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-muted-foreground dark:text-stone-500">
             {t("ChartPieInteractive.subtitleMonths")}
           </p>
         </div>

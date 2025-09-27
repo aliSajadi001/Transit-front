@@ -62,8 +62,8 @@ export function ChartBarMultiple() {
   return (
     <div className="w-full h-full flex flex-col p-4">
       <div className="flex flex-col gap-1 pb-4 mb-4 border-b">
-        <h3 className="text-lg font-semibold">{t("ChartBarMultiple.title")}</h3>
-        <p className="text-sm text-muted-foreground">
+        <h3 className="text-lg font-semibold dark:text-stone-500">{t("ChartBarMultiple.title")}</h3>
+        <p className="text-sm text-muted-foreground dark:text-stone-500">
           {t("ChartBarMultiple.subtitleMonths")}
         </p>
       </div>
@@ -96,10 +96,10 @@ export function ChartBarMultiple() {
         </ChartContainer>
       </div>
       <div className="flex flex-col items-start gap-2 text-sm pt-4 border-t">
-        <div className="flex gap-2 leading-none font-medium">
+        <div className="flex gap-2 leading-none font-medium dark:text-stone-600">
           {t("ChartBarMultiple.trend")} <TrendingUp className="h-4 w-4" />
         </div>
-        <div className="text-muted-foreground leading-none">
+        <div className="text-muted-foreground leading-none dark:text-stone-600">
           {t("ChartBarMultiple.captionMonths")}
         </div>
       </div>
